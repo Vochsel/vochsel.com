@@ -1,0 +1,14 @@
+body {
+    margin: 0; 
+    text-align:center; 
+    background-color:#222;
+   	font-family: circular, Helvetica, Arial, sans-serif;	
+
+}
+
+#btn_back {
+    font-size: 2vw;
+
+    color: white;
+    text-decoration: none;
+}

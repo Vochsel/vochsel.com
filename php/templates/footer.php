@@ -1,1 +1,1 @@
-<div id="footer">Copyright <a href="twitter.com/vochsel">@Vochsel</a> | Ben Skinner</div>
+<div id="footer">Copyright <a href="http://www.twitter.com/vochsel">@Vochsel</a> | Ben Skinner</div>

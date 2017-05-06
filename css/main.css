@@ -1,9 +1,25 @@
 body {
 	margin: 0;
+	font-family: circular, Helvetica, Arial, sans-serif;	
 }
 
 #container {
 	width: 80%;
 	margin: 0 auto;
+	text-align: left;
+}
+
+#header {
+
+}
+
+#footer {
+	bottom: 0;
+	margin: 0 auto;
+	position: relative;
+	clear: both;
 	text-align: center;
+	width: 100%;
+	padding-top: 2vw;
+	padding-bottom: 2vw;
 }
