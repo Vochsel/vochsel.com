@@ -11,6 +11,8 @@ export interface Post {
   excerpt?: string
 }
 
+const today = new Date().toISOString().slice(0, 10)
+
 export const posts: Post[] = Object.entries(modules)
   .filter(([, mod]) => mod.frontmatter?.visible !== false)
   .map(([path, mod]) => {
@@ -23,3 +25,4 @@ export const posts: Post[] = Object.entries(modules)
       excerpt: fm.excerpt,
     }
   })
+  .filter(p => p.date <= today)

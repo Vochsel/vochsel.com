@@ -44,6 +44,7 @@ function generateFeed(): string {
       }
     })
     .filter(p => p.visible)
+    .filter(p => p.date <= new Date().toISOString().slice(0, 10))
     .sort((a, b) => b.date.localeCompare(a.date))
 
   const items = posts.map(post => `    <item>
