@@ -29,7 +29,7 @@ export default function Home() {
               </h2>
             </Link>
             <time className="text-gray-500 text-sm">{post.date}</time>
-            {post.excerpt && <p className="mt-2 text-gray-700">{post.excerpt}</p>}
+            {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
             <Link
               to={`/blog/${post.slug}`}
               className="text-blue-600 hover:underline mt-2 inline-block"

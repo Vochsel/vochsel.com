@@ -6,7 +6,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"DM Serif Display"', 'serif'],
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
