@@ -8,7 +8,7 @@ export default function Header() {
           vochsel
         </Link>
         <div className="flex gap-6">
-          <Link to="/" className="hover:text-gray-600">
+          <Link to="/blog" className="hover:text-gray-600">
             Blog
           </Link>
           <Link to="/wiki" className="hover:text-gray-600">
