@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import rehypeSlug from 'rehype-slug'
-import { readdirSync, readFileSync, writeFileSync } from 'fs'
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 
 const SITE_URL = 'https://vochsel.com'
@@ -78,7 +78,9 @@ function rssPlugin(): Plugin {
       })
     },
     closeBundle() {
-      writeFileSync(resolve(__dirname, 'dist', 'feed.xml'), generateFeed())
+      const distDir = resolve(__dirname, 'dist')
+      mkdirSync(distDir, { recursive: true })
+      writeFileSync(resolve(distDir, 'feed.xml'), generateFeed())
       console.log('Generated dist/feed.xml')
     },
   }
