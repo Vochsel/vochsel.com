@@ -7,7 +7,7 @@ export default function Landing() {
         <p className="text-gray-500 mb-10">software engineer & creative technologist</p>
 
         <section className="mb-10">
-          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Current Projects</h2>
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Current Life</h2>
           <div className="space-y-3">
             <a
               href="https://magpai.app"
