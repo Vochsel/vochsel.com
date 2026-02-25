@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom'
 import { posts } from '../content/blog/posts'
 
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00')
+  const day = d.getDate()
+  const suffix = [11, 12, 13].includes(day) ? 'th'
+    : day % 10 === 1 ? 'st'
+    : day % 10 === 2 ? 'nd'
+    : day % 10 === 3 ? 'rd'
+    : 'th'
+  const month = d.toLocaleString('en-US', { month: 'short' })
+  const year = d.getFullYear()
+  return `${day}${suffix} of ${month} ${year}`
+}
+
 export default function Home() {
   // Sort by date descending (newest first)
   const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date))
@@ -28,7 +41,7 @@ export default function Home() {
                 {post.title}
               </h2>
             </Link>
-            <time className="text-gray-500 text-sm">{post.date}</time>
+            <time className="text-gray-500 text-sm">{formatDate(post.date)}</time>
             {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
             <Link
               to={`/blog/${post.slug}`}

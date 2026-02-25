@@ -1,6 +1,19 @@
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect, ComponentType } from 'react'
 
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00')
+  const day = d.getDate()
+  const suffix = [11, 12, 13].includes(day) ? 'th'
+    : day % 10 === 1 ? 'st'
+    : day % 10 === 2 ? 'nd'
+    : day % 10 === 3 ? 'rd'
+    : 'th'
+  const month = d.toLocaleString('en-US', { month: 'short' })
+  const year = d.getFullYear()
+  return `${day}${suffix} of ${month} ${year}`
+}
+
 // Import all blog MDX files
 const blogModules = import.meta.glob('../content/blog/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>
 
@@ -56,7 +69,7 @@ export default function BlogPost() {
       <Link to="/blog" className="text-blue-600 hover:underline mb-4 inline-block">
         &larr; Back to blog
       </Link>
-      <time className="block text-gray-500 text-sm mb-6">{slug}</time>
+      <time className="block text-gray-500 text-sm mb-6">{slug ? formatDate(slug) : ''}</time>
       {Content && (
         <article className="prose prose-lg max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 prose-pre:bg-gray-900">
           <Content />
