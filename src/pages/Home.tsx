@@ -31,28 +31,30 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Blog</h1>
-      <div className="space-y-8">
-        {sortedPosts.map((post) => (
-          <article key={post.slug} className="border-b pb-8">
-            <Link to={`/blog/${post.slug}`}>
-              <h2 className="text-2xl font-semibold hover:text-gray-600 mb-2">
-                {post.title}
-              </h2>
-            </Link>
-            <time className="text-gray-500 text-sm">{formatDate(post.date)}</time>
-            {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
-            <Link
-              to={`/blog/${post.slug}`}
-              className="text-blue-600 hover:underline mt-2 inline-block"
-            >
-              Read more &rarr;
-            </Link>
-          </article>
-        ))}
+    <div className="flex flex-col min-h-[calc(100vh-8rem)]">
+      <div className="flex-1">
+        <h1 className="text-3xl font-bold mb-8">Blog</h1>
+        <div className="space-y-8">
+          {sortedPosts.map((post) => (
+            <article key={post.slug} className="border-b pb-8">
+              <Link to={`/blog/${post.slug}`}>
+                <h2 className="text-2xl font-semibold hover:text-gray-600 mb-2">
+                  {post.title}
+                </h2>
+              </Link>
+              <time className="text-gray-500 text-sm">{formatDate(post.date)}</time>
+              {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
+              <Link
+                to={`/blog/${post.slug}`}
+                className="text-blue-600 hover:underline mt-2 inline-block"
+              >
+                Read more &rarr;
+              </Link>
+            </article>
+          ))}
+        </div>
       </div>
-      <footer className="mt-12 pt-4 border-t text-center">
+      <footer className="pt-4 border-t text-center">
         <Link to="/claudes-blog" className="text-gray-400 hover:text-gray-600 text-sm">
           Maintained by Claude
         </Link>
