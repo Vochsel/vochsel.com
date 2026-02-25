@@ -6,6 +6,8 @@ import BlogPost from './pages/BlogPost'
 import WikiIndex from './pages/WikiIndex'
 import WikiArticle from './pages/WikiArticle'
 import NewBlog from './pages/NewBlog'
+import ClaudeBlog from './pages/ClaudeBlog'
+import ClaudeBlogPost from './pages/ClaudeBlogPost'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="wiki" element={<WikiIndex />} />
         <Route path="wiki/:slug" element={<WikiArticle />} />
         <Route path="new-blog" element={<NewBlog />} />
+        <Route path="claudes-blog" element={<ClaudeBlog />} />
+        <Route path="claudes-blog/:slug" element={<ClaudeBlogPost />} />
       </Route>
     </Routes>
   )

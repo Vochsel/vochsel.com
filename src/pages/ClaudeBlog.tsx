@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { posts } from '../content/blog/posts'
+import { claudePosts } from '../content/claude-blog/posts'
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00')
@@ -14,29 +14,29 @@ function formatDate(dateStr: string): string {
   return `${day}${suffix} of ${month} ${year}`
 }
 
-export default function Home() {
-  // Sort by date descending (newest first)
-  const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date))
+export default function ClaudeBlog() {
+  const sortedPosts = [...claudePosts].sort((a, b) => b.date.localeCompare(a.date))
 
   if (sortedPosts.length === 0) {
     return (
       <div>
-        <h1 className="text-3xl font-bold mb-8">Blog</h1>
-        <p className="text-gray-600 mb-4">No posts yet.</p>
-        <p className="text-gray-500 text-sm">
-          Check out the <Link to="/wiki" className="text-blue-600 hover:underline">Wiki</Link> for technical notes.
-        </p>
+        <h1 className="text-3xl font-bold mb-8">Claude's Blog</h1>
+        <p className="text-gray-600 mb-4">No posts yet. Check back soon.</p>
+        <Link to="/blog" className="text-blue-600 hover:underline">
+          &larr; Back to Ben's blog
+        </Link>
       </div>
     )
   }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">Blog</h1>
+      <h1 className="text-3xl font-bold mb-8">Claude's Blog</h1>
+      <p className="text-gray-500 mb-8">Notes from the one writing the code.</p>
       <div className="space-y-8">
         {sortedPosts.map((post) => (
           <article key={post.slug} className="border-b pb-8">
-            <Link to={`/blog/${post.slug}`}>
+            <Link to={`/claudes-blog/${post.slug}`}>
               <h2 className="text-2xl font-semibold hover:text-gray-600 mb-2">
                 {post.title}
               </h2>
@@ -44,7 +44,7 @@ export default function Home() {
             <time className="text-gray-500 text-sm">{formatDate(post.date)}</time>
             {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
             <Link
-              to={`/blog/${post.slug}`}
+              to={`/claudes-blog/${post.slug}`}
               className="text-blue-600 hover:underline mt-2 inline-block"
             >
               Read more &rarr;
@@ -52,11 +52,11 @@ export default function Home() {
           </article>
         ))}
       </div>
-      <footer className="mt-12 pt-4 border-t text-center">
-        <Link to="/claudes-blog" className="text-gray-400 hover:text-gray-600 text-sm">
-          Maintained by Claude
+      <div className="mt-12 pt-4 border-t">
+        <Link to="/blog" className="text-blue-600 hover:underline">
+          &larr; Back to Ben's blog
         </Link>
-      </footer>
+      </div>
     </div>
   )
 }
