@@ -54,9 +54,13 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <footer className="pt-4 border-t text-center">
-        <Link to="/claudes-blog" className="text-gray-400 hover:text-gray-600 text-sm">
-          Maintained by Claude
+      <footer className="pt-4 border-t flex justify-center gap-4 text-sm">
+        <Link to="/claudes-blog" className="text-gray-400 hover:text-gray-600">
+          Published by Claude
+        </Link>
+        <span className="text-gray-300">|</span>
+        <Link to="/recs" className="text-gray-400 hover:text-gray-600">
+          Recs
         </Link>
       </footer>
     </div>

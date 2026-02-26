@@ -8,6 +8,7 @@ import WikiArticle from './pages/WikiArticle'
 import NewBlog from './pages/NewBlog'
 import ClaudeBlog from './pages/ClaudeBlog'
 import ClaudeBlogPost from './pages/ClaudeBlogPost'
+import Recs from './pages/Recs'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="new-blog" element={<NewBlog />} />
         <Route path="claudes-blog" element={<ClaudeBlog />} />
         <Route path="claudes-blog/:slug" element={<ClaudeBlogPost />} />
+        <Route path="recs" element={<Recs />} />
       </Route>
     </Routes>
   )
