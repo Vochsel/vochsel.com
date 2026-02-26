@@ -11,6 +11,11 @@ const sites = [
     url: 'https://tokeru.com/cgwiki/',
     description: 'Houdini, VFX, and procedural wizardry',
   },
+  {
+    name: 'Standard Intelligence',
+    url: 'https://si.inc/',
+    description: 'AI models for computer control and infrastructure',
+  },
 ]
 
 export default function Recs() {
