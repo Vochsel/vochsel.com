@@ -75,6 +75,7 @@ export default function BlogPost() {
           <Content />
         </article>
       )}
+      <div className="mb-32" />
     </div>
   )
 }
