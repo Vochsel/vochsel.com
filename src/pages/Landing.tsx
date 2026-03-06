@@ -25,6 +25,15 @@ export default function Landing() {
               <span className="font-medium group-hover:text-gray-500 transition-colors">blog</span>
               <span className="text-gray-400 text-sm">/blog</span>
             </a>
+            <a
+              href="https://www.get-dump.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between group"
+            >
+              <span className="font-medium group-hover:text-gray-500 transition-colors">get-dump</span>
+              <span className="text-gray-400 text-sm">get-dump.com</span>
+            </a>
             <div className="flex items-center justify-between">
               <span className="font-medium">music</span>
               <div className="flex items-center gap-2">
