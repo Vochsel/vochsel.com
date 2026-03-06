@@ -16,7 +16,7 @@ export default function Landing() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-between group"
               >
-                <span className="font-medium group-hover:text-gray-500 transition-colors">magpai</span>
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://magpai.app/favicon.ico" alt="" width="16" height="16" />magpai</span>
                 <span className="text-gray-400 text-sm">magpai.app</span>
               </a>
               <p className="text-sm text-gray-500">your business's AI operating system</p>
@@ -38,7 +38,7 @@ export default function Landing() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-between group"
               >
-                <span className="font-medium group-hover:text-gray-500 transition-colors">dump</span>
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://www.get-dump.com/favicon.ico" alt="" width="16" height="16" />dump</span>
                 <span className="text-gray-400 text-sm">get-dump.com</span>
               </a>
               <p className="text-sm text-gray-500">shared context for humans and ai</p>
