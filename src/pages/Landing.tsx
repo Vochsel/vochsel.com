@@ -23,16 +23,6 @@ export default function Landing() {
             </div>
             <div>
               <a
-                href="/blog"
-                className="flex items-center justify-between group"
-              >
-                <span className="font-medium group-hover:text-gray-500 transition-colors">blog</span>
-                <span className="text-gray-400 text-sm">/blog</span>
-              </a>
-              <p className="text-sm text-gray-500">random thoughts from a human</p>
-            </div>
-            <div>
-              <a
                 href="https://www.get-dump.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -42,6 +32,16 @@ export default function Landing() {
                 <span className="text-gray-400 text-sm">get-dump.com</span>
               </a>
               <p className="text-sm text-gray-500">shared context for humans and ai</p>
+            </div>
+            <div>
+              <a
+                href="/blog"
+                className="flex items-center justify-between group"
+              >
+                <span className="font-medium group-hover:text-gray-500 transition-colors">blog</span>
+                <span className="text-gray-400 text-sm">/blog</span>
+              </a>
+              <p className="text-sm text-gray-500">random thoughts from a human</p>
             </div>
             <div>
               <div className="flex items-center justify-between">
