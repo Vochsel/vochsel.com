@@ -3,5 +3,5 @@
     @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display');
     text { font-family: 'DM Serif Display', serif; }
   </style>
-  <text x="50%" y="75%" text-anchor="middle" font-size="28" fill="black">v</text>
+  <text x="50%" y="75%" text-anchor="middle" font-size="34" fill="black">v</text>
 </svg>
