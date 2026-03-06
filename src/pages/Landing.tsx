@@ -19,7 +19,7 @@ export default function Landing() {
                 <span className="font-medium group-hover:text-gray-500 transition-colors">magpai</span>
                 <span className="text-gray-400 text-sm">magpai.app</span>
               </a>
-              <p className="text-sm text-gray-900">your business's AI operating system</p>
+              <p className="text-sm text-gray-500">your business's AI operating system</p>
             </div>
             <div>
               <a
@@ -29,7 +29,7 @@ export default function Landing() {
                 <span className="font-medium group-hover:text-gray-500 transition-colors">blog</span>
                 <span className="text-gray-400 text-sm">/blog</span>
               </a>
-              <p className="text-sm text-gray-900">random thoughts from a human</p>
+              <p className="text-sm text-gray-500">random thoughts from a human</p>
             </div>
             <div>
               <a
@@ -41,7 +41,7 @@ export default function Landing() {
                 <span className="font-medium group-hover:text-gray-500 transition-colors">dump</span>
                 <span className="text-gray-400 text-sm">get-dump.com</span>
               </a>
-              <p className="text-sm text-gray-900">shared context for humans and ai</p>
+              <p className="text-sm text-gray-500">shared context for humans and ai</p>
             </div>
             <div>
               <div className="flex items-center justify-between">
@@ -67,7 +67,7 @@ export default function Landing() {
                   </a>
                 </div>
               </div>
-              <p className="text-sm text-gray-900">heavily inspired, knockoff</p>
+              <p className="text-sm text-gray-500">heavily inspired, Fred Again.. knockoff</p>
             </div>
           </div>
         </section>
