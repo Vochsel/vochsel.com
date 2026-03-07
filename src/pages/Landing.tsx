@@ -23,13 +23,13 @@ export default function Landing() {
             </div>
             <div>
               <a
-                href="https://www.get-dump.com"
+                href="https://dump.page"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between group"
               >
-                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://www.get-dump.com/favicon.ico" alt="" width="16" height="16" />dump</span>
-                <span className="text-gray-400 text-sm">get-dump.com</span>
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://dump.page/favicon.ico" alt="" width="16" height="16" />dump</span>
+                <span className="text-gray-400 text-sm">dump.page</span>
               </a>
               <p className="text-sm text-gray-500">shared context for humans and ai</p>
             </div>

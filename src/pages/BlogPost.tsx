@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
-import { useState, useEffect, ComponentType } from 'react'
+import { useState, useEffect, type ComponentType } from 'react'
+import QuoteParagraph from '../components/QuoteParagraph'
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00')
@@ -15,11 +16,13 @@ function formatDate(dateStr: string): string {
 }
 
 // Import all blog MDX files
-const blogModules = import.meta.glob('../content/blog/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>
+type MDXContent = ComponentType<{ components?: Record<string, ComponentType> }>
+
+const blogModules = import.meta.glob('../content/blog/*.mdx') as Record<string, () => Promise<{ default: MDXContent }>>
 
 export default function BlogPost() {
   const { slug } = useParams()
-  const [Content, setContent] = useState<ComponentType | null>(null)
+  const [Content, setContent] = useState<MDXContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -72,7 +75,7 @@ export default function BlogPost() {
       <time className="block text-gray-500 text-sm mb-6">{slug ? formatDate(slug) : ''}</time>
       {Content && (
         <article className="prose prose-lg max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 prose-pre:bg-gray-900">
-          <Content />
+          <Content components={{ p: QuoteParagraph }} />
         </article>
       )}
       <div className="mb-32" />
