@@ -35,6 +35,18 @@ export default function Landing() {
             </div>
             <div>
               <a
+                href="https://get-hoo.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between group"
+              >
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://get-hoo.com/favicon.ico" alt="" width="16" height="16" />Hoo</span>
+                <span className="text-gray-400 text-sm">get-hoo.com</span>
+              </a>
+              <p className="text-sm text-gray-500">spatial agent and web orchestrator</p>
+            </div>
+            <div>
+              <a
                 href="/blog"
                 className="flex items-center justify-between group"
               >
