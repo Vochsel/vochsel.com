@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
 import { posts } from '../content/blog/posts'
 
+const featuredLinks = [
+  {
+    href: 'https://walkie-talkie.dev',
+    title: 'walkie-talkie.dev',
+    description: 'access your local terminal from your web browser',
+  },
+]
+
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00')
   const day = d.getDate()
@@ -35,6 +43,25 @@ export default function Home() {
       <div className="flex-1">
         <h1 className="text-3xl font-bold mb-8">Blog</h1>
         <div className="space-y-8">
+          {featuredLinks.map((link) => (
+            <article key={link.href} className="border-b pb-8">
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <h2 className="text-2xl font-semibold hover:text-gray-600 mb-2">
+                  {link.title}
+                </h2>
+                <p className="text-gray-500 text-sm">Link</p>
+                <p className="mt-2 text-gray-600">{link.description}</p>
+                <span className="text-blue-600 hover:underline mt-2 inline-block">
+                  Visit site &rarr;
+                </span>
+              </a>
+            </article>
+          ))}
           {sortedPosts.map((post) => (
             <article key={post.slug} className="border-b pb-8">
               <Link to={`/blog/${post.slug}`}>
