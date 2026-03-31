@@ -41,27 +41,26 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-8rem)]">
       <div className="flex-1">
+        <section className="mb-12">
+          <h2 className="text-xl font-bold mb-4">Active Projects</h2>
+          <ul className="space-y-2">
+            {featuredLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  {link.title}
+                </a>
+                <span className="text-gray-500 ml-2">— {link.description}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
         <h1 className="text-3xl font-bold mb-8">Blog</h1>
         <div className="space-y-8">
-          {featuredLinks.map((link) => (
-            <article key={link.href} className="border-b pb-8">
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <h2 className="text-2xl font-semibold hover:text-gray-600 mb-2">
-                  {link.title}
-                </h2>
-                <p className="text-gray-500 text-sm">Link</p>
-                <p className="mt-2 text-gray-600">{link.description}</p>
-                <span className="text-blue-600 hover:underline mt-2 inline-block">
-                  Visit site &rarr;
-                </span>
-              </a>
-            </article>
-          ))}
           {sortedPosts.map((post) => (
             <article key={post.slug} className="border-b pb-8">
               <Link to={`/blog/${post.slug}`}>
