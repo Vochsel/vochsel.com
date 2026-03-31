@@ -47,6 +47,18 @@ export default function Landing() {
             </div>
             <div>
               <a
+                href="https://walkie-talkie.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between group"
+              >
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://walkie-talkie.dev/favicon.ico" alt="" width="16" height="16" />walkie-talkie</span>
+                <span className="text-gray-400 text-sm">walkie-talkie.dev</span>
+              </a>
+              <p className="text-sm text-gray-500">access your local terminal from your web browser</p>
+            </div>
+            <div>
+              <a
                 href="/blog"
                 className="flex items-center justify-between group"
               >
