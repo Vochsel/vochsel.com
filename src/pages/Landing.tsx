@@ -79,7 +79,7 @@ export default function Landing() {
                   </a>
                 </div>
               </a>
-              <p className="text-sm text-gray-500">procedural geometry experiments in Rust</p>
+              <p className="text-sm text-gray-500">rust based procedural geometry, texturing, and scene library</p>
             </div>
             <div>
               <a
