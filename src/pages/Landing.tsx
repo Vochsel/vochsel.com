@@ -11,18 +11,6 @@ export default function Landing() {
           <div className="space-y-3">
             <div>
               <a
-                href="https://magpai.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between group"
-              >
-                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://magpai.app/favicon.ico" alt="" width="16" height="16" />magpai</span>
-                <span className="text-gray-400 text-sm">magpai.app</span>
-              </a>
-              <p className="text-sm text-gray-500">your business's AI operating system</p>
-            </div>
-            <div>
-              <a
                 href="https://dump.page"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -123,6 +111,15 @@ export default function Landing() {
         <section>
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Past Life</h2>
           <div className="space-y-3">
+            <a
+              href="https://magpai.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between group"
+            >
+              <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://magpai.app/favicon.ico" alt="" width="16" height="16" />magpai</span>
+              <span className="text-gray-400 text-sm">magpai.app</span>
+            </a>
             <a
               href="/wiki"
               className="flex items-center justify-between group"
