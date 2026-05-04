@@ -76,7 +76,7 @@ export default function Landing() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-between group"
               >
-                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>kanban-cli</span>
+                <span className="flex items-center gap-2 font-medium group-hover:text-gray-500 transition-colors"><img src="https://kanban-cli.vochsel.com/favicon.svg" alt="" width="16" height="16" />kanban-cli</span>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-400 text-sm">kanban-cli.vochsel.com</span>
                   <a
