@@ -219,9 +219,9 @@ export default function NewBlog() {
   }
 
   return (
-    <div className="flex max-w-5xl mx-auto py-8 px-4 gap-6">
-      {/* Sidebar */}
-      <div className="w-52 shrink-0">
+    <>
+      {/* Sidebar — fixed to left edge */}
+      <div className="fixed top-16 left-0 w-44 h-[calc(100vh-4rem)] overflow-y-auto p-3 border-r border-gray-200 bg-white/80 backdrop-blur-sm z-10">
         <button
           onClick={handleNew}
           className="w-full px-3 py-2 mb-3 bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors text-sm"
@@ -253,8 +253,8 @@ export default function NewBlog() {
         )}
       </div>
 
-      {/* Editor area */}
-      <div className="flex-1 min-w-0">
+      {/* Editor area — centered */}
+      <div className="max-w-3xl mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold mb-6">New Blog Post</h1>
 
         {activeDraft ? (
@@ -306,6 +306,6 @@ export default function NewBlog() {
           <p className="text-gray-400 mt-12 text-center">Create a new draft to get started.</p>
         )}
       </div>
-    </div>
+    </>
   )
 }
