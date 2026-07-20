@@ -9,6 +9,7 @@ import NewBlog from './pages/NewBlog'
 import ClaudeBlog from './pages/ClaudeBlog'
 import ClaudeBlogPost from './pages/ClaudeBlogPost'
 import Recs from './pages/Recs'
+import ThreeDPrinting from './pages/ThreeDPrinting'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="claudes-blog" element={<ClaudeBlog />} />
         <Route path="claudes-blog/:slug" element={<ClaudeBlogPost />} />
         <Route path="recs" element={<Recs />} />
+        <Route path="3d-printing" element={<ThreeDPrinting />} />
       </Route>
     </Routes>
   )
