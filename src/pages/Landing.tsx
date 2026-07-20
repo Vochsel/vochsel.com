@@ -132,6 +132,20 @@ export default function Landing() {
           </div>
         </section>
 
+        <section className="mb-10">
+          <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Hobbies</h2>
+          <div>
+            <a
+              href="/3d-printing"
+              className="flex items-center justify-between group"
+            >
+              <span className="font-medium group-hover:text-gray-500 transition-colors">3D printing</span>
+              <span className="text-gray-400 text-sm">/3d-printing</span>
+            </a>
+            <p className="text-sm text-gray-500">prints, timelapses, and experiments with a Bambu Lab P2S</p>
+          </div>
+        </section>
+
         <section>
           <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-4">Past Life</h2>
           <div className="space-y-3">
