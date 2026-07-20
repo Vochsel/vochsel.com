@@ -128,12 +128,48 @@ export default function ThreeDPrinting() {
       </div>
 
       <div className="mt-8 max-w-2xl">
-        <h2 className="mb-3 text-xl font-semibold">A new machine</h2>
-        <p className="leading-7 text-gray-600">
-          I bought a Bambu Lab P2S, so I’m learning the machine, making useful
-          things, and seeing where a new 3D-printing rabbit hole takes me. I’ll
-          stream the experiments here—successful prints, spaghetti, and all.
-        </p>
+        <h2 className="mb-4 text-xl font-semibold">Five years later</h2>
+        <div className="space-y-5 leading-7 text-gray-600">
+          <p>
+            It’s taken five years—and it only happened because it’s cheaper than
+            the TV and car I want—but I finally bought a 3D printer: a Bambu Lab
+            P2S.
+          </p>
+          <p>
+            So far, so great. They’re not joking when they call this thing
+            plug-and-print. The four-spool accessory feeder is a must-have: it
+            actually swaps and feeds filament automatically. I honestly thought
+            it just held the spools.
+          </p>
+          <p>
+            I wanted a quick, enjoyable way to make models. I was tempted to use{' '}
+            <a
+              href="https://procgeo.vochsel.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-900"
+            >
+              rs-procgeo
+            </a>
+            , but I’ve been playing with the idea of an LLM-writable JSON/YAML
+            schema for procedural geometry, and this seemed like the right time
+            to try it. That experiment became{' '}
+            <a
+              href="https://printa.vochsel.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-900"
+            >
+              Printa
+            </a>
+            , which also has a handy MCP that works in ChatGPT. Almost all of the
+            text pieces and vases below were made in one shot.
+          </p>
+          <p>
+            I’m trying to keep a better record of what I make, so here’s
+            everything I’ve printed so far.
+          </p>
+        </div>
         <a
           href={livestreamUrl}
           target="_blank"
