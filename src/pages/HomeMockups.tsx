@@ -398,49 +398,55 @@ const blobFragmentShader = `
     return fract(sin(dot(value, vec2(127.1, 311.7))) * 43758.5453123);
   }
 
-  float blob(vec2 point, vec2 centre, float radius, float phase) {
-    vec2 delta = point - centre;
+  float blob(vec2 uv, vec2 centre, float radius, float phase) {
+    vec2 delta = uv - centre;
+    delta.x *= uResolution.x / uResolution.y;
     float angle = atan(delta.y, delta.x);
     float wobble =
-      sin(angle * 3.0 + uTime * 0.38 + phase) * 0.055 +
-      sin(angle * 5.0 - uTime * 0.24 + phase * 1.7) * 0.026;
+      sin(angle * 3.0 + uTime * 0.46 + phase) * 0.040 +
+      sin(angle * 5.0 - uTime * 0.31 + phase * 1.7) * 0.018 +
+      sin(angle * 7.0 + uTime * 0.22 + phase * 0.8) * 0.010;
     float distanceToEdge = length(delta) - wobble;
-    return smoothstep(radius + 0.22, radius - 0.12, distanceToEdge);
+    return smoothstep(radius + 0.028, radius - 0.022, distanceToEdge);
   }
 
   void main() {
     vec2 uv = gl_FragCoord.xy / uResolution.xy;
-    vec2 point = uv - 0.5;
-    point.x *= uResolution.x / uResolution.y;
-
-    vec3 colour = vec3(0.961, 0.961, 0.949);
+    vec3 colour = vec3(0.965, 0.965, 0.953);
 
     vec2 centreOne = vec2(
-      -0.38 + sin(uTime * 0.21) * 0.16,
-       0.22 + cos(uTime * 0.17) * 0.13
+      0.22 + sin(uTime * 0.24) * 0.055,
+      0.76 + cos(uTime * 0.19) * 0.050
     );
     vec2 centreTwo = vec2(
-       0.38 + cos(uTime * 0.16) * 0.17,
-       0.17 + sin(uTime * 0.20) * 0.15
+      0.78 + cos(uTime * 0.18) * 0.060,
+      0.74 + sin(uTime * 0.23) * 0.055
     );
     vec2 centreThree = vec2(
-      -0.16 + cos(uTime * 0.14) * 0.20,
-      -0.35 + sin(uTime * 0.18) * 0.12
+      0.30 + cos(uTime * 0.16) * 0.065,
+      0.25 + sin(uTime * 0.21) * 0.055
     );
     vec2 centreFour = vec2(
-       0.47 + sin(uTime * 0.13) * 0.15,
-      -0.38 + cos(uTime * 0.22) * 0.11
+      0.76 + sin(uTime * 0.15) * 0.055,
+      0.27 + cos(uTime * 0.25) * 0.050
     );
 
-    float shapeOne = blob(point, centreOne, 0.43, 0.3);
-    float shapeTwo = blob(point, centreTwo, 0.38, 2.1);
-    float shapeThree = blob(point, centreThree, 0.42, 4.0);
-    float shapeFour = blob(point, centreFour, 0.34, 5.4);
+    float shapeOne = blob(uv, centreOne, 0.245, 0.3);
+    float shapeTwo = blob(uv, centreTwo, 0.225, 2.1);
+    float shapeThree = blob(uv, centreThree, 0.255, 4.0);
+    float shapeFour = blob(uv, centreFour, 0.215, 5.4);
 
-    colour = mix(colour, vec3(0.74, 0.81, 1.0), shapeOne * 0.60);
-    colour = mix(colour, vec3(1.0, 0.76, 0.88), shapeTwo * 0.50);
-    colour = mix(colour, vec3(0.77, 0.91, 0.71), shapeThree * 0.46);
-    colour = mix(colour, vec3(1.0, 0.79, 0.56), shapeFour * 0.42);
+    colour = mix(colour, vec3(0.64, 0.73, 1.0), shapeOne * 0.76);
+    colour = mix(colour, vec3(1.0, 0.66, 0.82), shapeTwo * 0.72);
+    colour = mix(colour, vec3(0.66, 0.87, 0.57), shapeThree * 0.68);
+    colour = mix(colour, vec3(1.0, 0.68, 0.34), shapeFour * 0.66);
+
+    float sheenOne = blob(uv + vec2(0.026, -0.032), centreOne, 0.205, 0.3);
+    float sheenTwo = blob(uv + vec2(0.022, -0.028), centreTwo, 0.188, 2.1);
+    float sheenThree = blob(uv + vec2(0.025, -0.030), centreThree, 0.215, 4.0);
+    float sheenFour = blob(uv + vec2(0.020, -0.025), centreFour, 0.180, 5.4);
+    float sheen = max(max(sheenOne, sheenTwo), max(sheenThree, sheenFour));
+    colour = mix(colour, vec3(1.0), sheen * 0.085);
 
     float grainFrame = floor(uTime * 12.0);
     float grain = hash(gl_FragCoord.xy + grainFrame * vec2(19.0, 47.0)) - 0.5;
