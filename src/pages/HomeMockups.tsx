@@ -419,38 +419,27 @@ const blobFragmentShader = `
     vec2 uv = gl_FragCoord.xy / uResolution.xy;
     vec3 colour = vec3(0.965, 0.965, 0.953);
 
-    vec2 centreOne = vec2(
-      0.22 + sin(uTime * 0.24) * 0.055,
-      0.76 + cos(uTime * 0.19) * 0.050
-    );
-    vec2 centreTwo = vec2(
-      0.78 + cos(uTime * 0.18) * 0.060,
-      0.74 + sin(uTime * 0.23) * 0.055
-    );
-    vec2 centreThree = vec2(
-      0.30 + cos(uTime * 0.16) * 0.065,
-      0.25 + sin(uTime * 0.21) * 0.055
-    );
-    vec2 centreFour = vec2(
-      0.76 + sin(uTime * 0.15) * 0.055,
-      0.27 + cos(uTime * 0.25) * 0.050
+    vec2 centre = vec2(
+      0.50 + sin(uTime * 0.19) * 0.040,
+      0.70 + cos(uTime * 0.16) * 0.038
     );
 
-    float shapeOne = blob(uv, centreOne, 0.245, 0.3);
-    float shapeTwo = blob(uv, centreTwo, 0.225, 2.1);
-    float shapeThree = blob(uv, centreThree, 0.255, 4.0);
-    float shapeFour = blob(uv, centreFour, 0.215, 5.4);
+    float aspect = uResolution.x / uResolution.y;
+    float radius = mix(0.235, 0.355, smoothstep(0.50, 1.20, aspect));
+    float shape = blob(uv, centre, radius, 1.2);
+    float colourMix = smoothstep(
+      centre.x - 0.30,
+      centre.x + 0.30,
+      uv.x + sin(uv.y * 5.0 + uTime * 0.12) * 0.035
+    );
+    vec3 blobColour = mix(
+      vec3(0.58, 0.70, 1.0),
+      vec3(1.0, 0.62, 0.82),
+      colourMix
+    );
+    colour = mix(colour, blobColour, shape * 0.76);
 
-    colour = mix(colour, vec3(0.64, 0.73, 1.0), shapeOne * 0.76);
-    colour = mix(colour, vec3(1.0, 0.66, 0.82), shapeTwo * 0.72);
-    colour = mix(colour, vec3(0.66, 0.87, 0.57), shapeThree * 0.68);
-    colour = mix(colour, vec3(1.0, 0.68, 0.34), shapeFour * 0.66);
-
-    float sheenOne = blob(uv + vec2(0.026, -0.032), centreOne, 0.205, 0.3);
-    float sheenTwo = blob(uv + vec2(0.022, -0.028), centreTwo, 0.188, 2.1);
-    float sheenThree = blob(uv + vec2(0.025, -0.030), centreThree, 0.215, 4.0);
-    float sheenFour = blob(uv + vec2(0.020, -0.025), centreFour, 0.180, 5.4);
-    float sheen = max(max(sheenOne, sheenTwo), max(sheenThree, sheenFour));
+    float sheen = blob(uv + vec2(0.030, -0.040), centre, radius - 0.060, 1.2);
     colour = mix(colour, vec3(1.0), sheen * 0.085);
 
     float grainFrame = floor(uTime * 12.0);
