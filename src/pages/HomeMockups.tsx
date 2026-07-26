@@ -1,4 +1,7 @@
+import { useEffect, useRef } from 'react'
+import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import * as THREE from 'three'
 
 const currentProjects = [
   {
@@ -28,11 +31,37 @@ const currentProjects = [
 ]
 
 const pastProjects = [
-  { name: 'dump', href: 'https://dump.page', description: 'Shared context for humans and AI' },
-  { name: 'Hoo', href: 'https://get-hoo.com', description: 'Spatial agent and web orchestrator' },
-  { name: 'walkie-talkie', href: 'https://walkie-talkie.dev', description: 'Your local terminal, from the browser' },
-  { name: 'rs-procgeo', href: 'https://procgeo.vochsel.com', description: 'Procedural geometry in Rust' },
-  { name: 'kanban-cli', href: 'https://kanban-cli.vochsel.com', description: 'One-line UI for markdown kanban files' },
+  {
+    name: 'dump',
+    href: 'https://dump.page',
+    favicon: 'https://dump.page/favicon.ico',
+    description: 'Shared context for humans and AI',
+  },
+  {
+    name: 'Hoo',
+    href: 'https://get-hoo.com',
+    favicon: 'https://www.get-hoo.com/favicon.svg',
+    description: 'Spatial agent and web orchestrator',
+  },
+  {
+    name: 'walkie-talkie',
+    href: 'https://walkie-talkie.dev',
+    favicon: 'https://walkie-talkie.dev/icon.svg',
+    description: 'Your local terminal, from the browser',
+  },
+  {
+    name: 'rs-procgeo',
+    href: 'https://procgeo.vochsel.com',
+    github: 'https://github.com/Vochsel/rs-procgeo',
+    description: 'Procedural geometry in Rust',
+  },
+  {
+    name: 'kanban-cli',
+    href: 'https://kanban-cli.vochsel.com',
+    favicon: 'https://kanban-cli.vochsel.com/favicon.svg',
+    github: 'https://github.com/Vochsel/kanban-cli',
+    description: 'One-line UI for markdown kanban files',
+  },
 ]
 
 const archiveLinks = [
@@ -353,68 +382,304 @@ function ConceptThree() {
   )
 }
 
+const blobVertexShader = `
+  void main() {
+    gl_Position = vec4(position, 1.0);
+  }
+`
+
+const blobFragmentShader = `
+  precision highp float;
+
+  uniform float uTime;
+  uniform vec2 uResolution;
+
+  float hash(vec2 value) {
+    return fract(sin(dot(value, vec2(127.1, 311.7))) * 43758.5453123);
+  }
+
+  float blob(vec2 point, vec2 centre, float radius, float phase) {
+    vec2 delta = point - centre;
+    float angle = atan(delta.y, delta.x);
+    float wobble =
+      sin(angle * 3.0 + uTime * 0.38 + phase) * 0.055 +
+      sin(angle * 5.0 - uTime * 0.24 + phase * 1.7) * 0.026;
+    float distanceToEdge = length(delta) - wobble;
+    return smoothstep(radius + 0.22, radius - 0.12, distanceToEdge);
+  }
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / uResolution.xy;
+    vec2 point = uv - 0.5;
+    point.x *= uResolution.x / uResolution.y;
+
+    vec3 colour = vec3(0.961, 0.961, 0.949);
+
+    vec2 centreOne = vec2(
+      -0.38 + sin(uTime * 0.21) * 0.16,
+       0.22 + cos(uTime * 0.17) * 0.13
+    );
+    vec2 centreTwo = vec2(
+       0.38 + cos(uTime * 0.16) * 0.17,
+       0.17 + sin(uTime * 0.20) * 0.15
+    );
+    vec2 centreThree = vec2(
+      -0.16 + cos(uTime * 0.14) * 0.20,
+      -0.35 + sin(uTime * 0.18) * 0.12
+    );
+    vec2 centreFour = vec2(
+       0.47 + sin(uTime * 0.13) * 0.15,
+      -0.38 + cos(uTime * 0.22) * 0.11
+    );
+
+    float shapeOne = blob(point, centreOne, 0.43, 0.3);
+    float shapeTwo = blob(point, centreTwo, 0.38, 2.1);
+    float shapeThree = blob(point, centreThree, 0.42, 4.0);
+    float shapeFour = blob(point, centreFour, 0.34, 5.4);
+
+    colour = mix(colour, vec3(0.74, 0.81, 1.0), shapeOne * 0.60);
+    colour = mix(colour, vec3(1.0, 0.76, 0.88), shapeTwo * 0.50);
+    colour = mix(colour, vec3(0.77, 0.91, 0.71), shapeThree * 0.46);
+    colour = mix(colour, vec3(1.0, 0.79, 0.56), shapeFour * 0.42);
+
+    float grainFrame = floor(uTime * 12.0);
+    float grain = hash(gl_FragCoord.xy + grainFrame * vec2(19.0, 47.0)) - 0.5;
+    colour += grain * 0.045;
+
+    gl_FragColor = vec4(colour, 1.0);
+  }
+`
+
+function OrganicBackground() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    let renderer: THREE.WebGLRenderer
+
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: false,
+        powerPreference: 'low-power',
+      })
+    } catch {
+      return
+    }
+
+    const scene = new THREE.Scene()
+    const camera = new THREE.Camera()
+    const uniforms = {
+      uTime: { value: 0 },
+      uResolution: { value: new THREE.Vector2(1, 1) },
+    }
+    const material = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: blobVertexShader,
+      fragmentShader: blobFragmentShader,
+      depthTest: false,
+      depthWrite: false,
+    })
+    const geometry = new THREE.PlaneGeometry(2, 2)
+    const mesh = new THREE.Mesh(geometry, material)
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const startedAt = performance.now()
+    let animationFrame = 0
+
+    renderer.domElement.className = 'h-full w-full'
+    renderer.domElement.setAttribute('aria-hidden', 'true')
+    container.appendChild(renderer.domElement)
+    scene.add(mesh)
+
+    const resize = () => {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+      renderer.setSize(window.innerWidth, window.innerHeight, false)
+      uniforms.uResolution.value.set(
+        renderer.domElement.width,
+        renderer.domElement.height,
+      )
+    }
+
+    const render = (now: number) => {
+      uniforms.uTime.value = reduceMotion ? 0 : (now - startedAt) / 1000
+      renderer.render(scene, camera)
+
+      if (!reduceMotion) {
+        animationFrame = window.requestAnimationFrame(render)
+      }
+    }
+
+    resize()
+    window.addEventListener('resize', resize, { passive: true })
+    render(startedAt)
+
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.cancelAnimationFrame(animationFrame)
+      geometry.dispose()
+      material.dispose()
+      renderer.dispose()
+      renderer.domElement.remove()
+    }
+  }, [])
+
+  return (
+    <div
+      ref={containerRef}
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#f5f5f3]"
+      aria-hidden="true"
+    />
+  )
+}
+
+function InsetProjectCard({
+  project,
+  tint,
+}: {
+  project: (typeof currentProjects)[number]
+  tint: string
+}) {
+  const cardRef = useRef<HTMLAnchorElement>(null)
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLAnchorElement>) => {
+    const card = cardRef.current
+    if (!card) return
+
+    const bounds = card.getBoundingClientRect()
+    const horizontal = (event.clientX - bounds.left) / bounds.width - 0.5
+    const vertical = (event.clientY - bounds.top) / bounds.height - 0.5
+
+    card.style.setProperty('--glow-x', `${horizontal * 34}px`)
+    card.style.setProperty('--glow-y', `${vertical * 28}px`)
+    card.style.setProperty('--content-x', `${horizontal * 7}px`)
+    card.style.setProperty('--content-y', `${vertical * 6}px`)
+  }
+
+  const resetParallax = () => {
+    const card = cardRef.current
+    if (!card) return
+
+    card.style.setProperty('--glow-x', '0px')
+    card.style.setProperty('--glow-y', '0px')
+    card.style.setProperty('--content-x', '0px')
+    card.style.setProperty('--content-y', '0px')
+  }
+
+  return (
+    <a
+      ref={cardRef}
+      href={project.href}
+      {...externalProps(project.href)}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetParallax}
+      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl sm:p-8 ${tint}`}
+    >
+      <span
+        className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out"
+        style={{ transform: 'translate3d(var(--glow-x, 0px), var(--glow-y, 0px), 0) scale(1.1)' }}
+      />
+      <span className="pointer-events-none absolute inset-2 rounded-[1.55rem] border border-white/45 shadow-[inset_0_0_48px_rgba(255,255,255,0.28)]" />
+      <span
+        className="relative flex w-full flex-col justify-between transition-transform duration-150 ease-out"
+        style={{ transform: 'translate3d(var(--content-x, 0px), var(--content-y, 0px), 0)' }}
+      >
+        <span className="flex items-start justify-between">
+          <span className="rounded-full border border-white/45 bg-white/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md">
+            {project.type}
+          </span>
+          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/45 bg-white/45 backdrop-blur-md transition-colors group-hover:bg-white/75">
+            <Arrow />
+          </span>
+        </span>
+        <span>
+          <span className="block text-4xl font-medium tracking-[-0.06em] sm:text-5xl">{project.name}</span>
+          <span className="mt-3 block max-w-sm text-sm leading-6 text-black/50">{project.description}</span>
+        </span>
+      </span>
+    </a>
+  )
+}
+
+function ProductIcon({ project }: { project: (typeof pastProjects)[number] }) {
+  if (project.favicon) {
+    return (
+      <img
+        src={project.favicon}
+        alt=""
+        width="20"
+        height="20"
+        className="h-5 w-5 object-contain"
+      />
+    )
+  }
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3 4.5 7.2 12 11.5l7.5-4.3L12 3Z" />
+      <path d="m4.5 7.2.1 8.7L12 21v-9.5" />
+      <path d="m19.5 7.2-.1 8.7L12 21" />
+    </svg>
+  )
+}
+
+function GitHubIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+    </svg>
+  )
+}
+
 function ConceptFour() {
   const cardColours = [
-    'bg-[#d7e2ff] hover:bg-[#c8d7ff]',
-    'bg-[#ffd9ee] hover:bg-[#ffcbe7]',
-    'bg-[#ddf1d5] hover:bg-[#cfeac5]',
-    'bg-[#ffe1bd] hover:bg-[#ffd5a5]',
+    'bg-[#d7e2ff]/70',
+    'bg-[#ffd9ee]/70',
+    'bg-[#ddf1d5]/70',
+    'bg-[#ffe1bd]/70',
   ]
 
   return (
-    <div className="min-h-screen bg-[#f5f5f3] pb-28 text-[#20201e] selection:bg-[#1f4eea] selection:text-white">
-      <main className="mx-auto max-w-7xl px-5 py-6 sm:px-10 sm:py-10">
+    <div className="relative min-h-screen pb-28 text-[#20201e] selection:bg-[#1f4eea] selection:text-white">
+      <OrganicBackground />
+      <main className="relative z-10 mx-auto max-w-7xl px-5 py-6 sm:px-10 sm:py-10">
         <header className="flex items-center justify-between">
           <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
-          <div className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-[11px] shadow-sm">
+          <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
             Making things in Sydney
           </div>
         </header>
 
-        <section className="py-20 sm:py-28 lg:py-36">
-          <p className="mb-6 text-sm text-black/45">Hello, I’m Ben Skinner.</p>
-          <h1 className="max-w-5xl text-[clamp(3.3rem,8vw,7.4rem)] font-medium leading-[0.95] tracking-[-0.07em]">
-            I make useful tools<br />
-            <span className="text-black/28">and playful things.</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-lg leading-7 text-black/50">
-            Software engineer and creative technologist exploring the space
-            between screens, speakers, and the physical world.
-          </p>
-        </section>
-
-        <section>
+        <section className="pt-[28vh] sm:pt-[36vh]">
           <div className="mb-5 flex items-end justify-between">
             <h2 className="text-sm font-semibold">Current life</h2>
             <span className="text-xs text-black/35">Four places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {currentProjects.map((project, index) => (
-              <a
+              <InsetProjectCard
                 key={project.name}
-                href={project.href}
-                {...externalProps(project.href)}
-                className={`group flex min-h-72 flex-col justify-between rounded-[2rem] p-6 transition-all hover:-translate-y-1 hover:shadow-lg sm:p-8 ${cardColours[index]}`}
-              >
-                <div className="flex items-start justify-between">
-                  <span className="rounded-full bg-white/55 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em]">
-                    {project.type}
-                  </span>
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-white/55 transition-transform group-hover:rotate-45">
-                    <Arrow />
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-4xl font-medium tracking-[-0.06em] sm:text-5xl">{project.name}</h3>
-                  <p className="mt-3 max-w-sm text-sm leading-6 text-black/50">{project.description}</p>
-                </div>
-              </a>
+                project={project}
+                tint={cardColours[index]}
+              />
             ))}
           </div>
         </section>
 
-        <section className="mt-20 border-t border-black/10 pt-8 sm:mt-28">
+        <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl sm:mt-28 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
             <div>
               <h2 className="text-sm font-semibold">Past life</h2>
@@ -422,24 +687,50 @@ function ConceptFour() {
             </div>
             <div className="grid sm:grid-cols-2">
               {pastProjects.map((project) => (
-                <a
+                <div
                   key={project.name}
-                  href={project.href}
-                  {...externalProps(project.href)}
-                  className="group flex items-center justify-between border-b border-black/10 py-5 sm:odd:mr-8"
+                  className="flex min-w-0 items-center justify-between gap-4 border-b border-black/10 py-5 sm:odd:mr-8"
                 >
-                  <span>
-                    <span className="block font-medium">{project.name}</span>
-                    <span className="mt-1 block text-xs text-black/40">{project.description}</span>
-                  </span>
-                  <span className="text-black/30 group-hover:text-black"><Arrow /></span>
-                </a>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-black/8 bg-white/60">
+                      <ProductIcon project={project} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium">{project.name}</span>
+                      <span className="mt-1 block truncate text-xs text-black/40">{project.description}</span>
+                    </span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.name} on GitHub`}
+                        title="GitHub"
+                        className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black"
+                      >
+                        <GitHubIcon />
+                      </a>
+                    )}
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${project.name}`}
+                      title="Open product"
+                      className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black"
+                    >
+                      <Arrow />
+                    </a>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/40">
+        <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/45">
           <span>© 2026 Ben Skinner</span>
           <div className="flex gap-5">
             {archiveLinks.map((link) => (

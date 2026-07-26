@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Landing from './pages/Landing'
@@ -10,12 +11,20 @@ import ClaudeBlog from './pages/ClaudeBlog'
 import ClaudeBlogPost from './pages/ClaudeBlogPost'
 import Recs from './pages/Recs'
 import ThreeDPrinting from './pages/ThreeDPrinting'
-import HomeMockups from './pages/HomeMockups'
+
+const HomeMockups = lazy(() => import('./pages/HomeMockups'))
 
 function App() {
   return (
     <Routes>
-      <Route path="/mockups/:concept" element={<HomeMockups />} />
+      <Route
+        path="/mockups/:concept"
+        element={(
+          <Suspense fallback={<div className="min-h-screen bg-[#f5f5f3]" />}>
+            <HomeMockups />
+          </Suspense>
+        )}
+      />
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />} />
         <Route path="blog" element={<Home />} />
