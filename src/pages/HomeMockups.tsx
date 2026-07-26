@@ -47,13 +47,13 @@ const pastProjects = [
     name: 'walkie-talkie',
     href: 'https://walkie-talkie.dev',
     favicon: 'https://walkie-talkie.dev/icon.svg',
-    description: 'Your local terminal, from the browser',
+    description: 'Access your local terminal from your web browser',
   },
   {
     name: 'rs-procgeo',
     href: 'https://procgeo.vochsel.com',
     github: 'https://github.com/Vochsel/rs-procgeo',
-    description: 'Procedural geometry in Rust',
+    description: 'Rust-based procedural geometry, texturing, and scene library',
   },
   {
     name: 'kanban-cli',
@@ -62,10 +62,15 @@ const pastProjects = [
     github: 'https://github.com/Vochsel/kanban-cli',
     description: 'One-line UI for markdown kanban files',
   },
+  {
+    name: 'magpai',
+    href: 'https://magpai.app',
+    favicon: 'https://magpai.app/favicon.ico',
+    description: "Your business's AI operating system",
+  },
 ]
 
 const archiveLinks = [
-  { name: 'magpai', href: 'https://magpai.app' },
   { name: 'wiki', href: '/wiki' },
   { name: 'portfolio', href: 'https://benjaminskinner.com.au' },
   { name: 'shaders', href: 'https://www.shadertoy.com/user/vochsel' },
