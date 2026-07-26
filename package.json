@@ -18,15 +18,13 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
     "remark-frontmatter": "^5.0.0",
-    "remark-mdx-frontmatter": "^5.2.0",
-    "three": "^0.185.1"
+    "remark-mdx-frontmatter": "^5.2.0"
   },
   "devDependencies": {
     "@mdx-js/rollup": "^3.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
-    "@types/three": "^0.185.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",

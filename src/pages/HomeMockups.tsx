@@ -1,7 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import * as THREE from 'three'
 
 const currentProjects = [
   {
@@ -387,153 +386,6 @@ function ConceptThree() {
   )
 }
 
-const blobVertexShader = `
-  void main() {
-    gl_Position = vec4(position, 1.0);
-  }
-`
-
-const blobFragmentShader = `
-  precision highp float;
-
-  uniform float uTime;
-  uniform vec2 uResolution;
-
-  float hash(vec2 value) {
-    return fract(sin(dot(value, vec2(127.1, 311.7))) * 43758.5453123);
-  }
-
-  float blob(vec2 uv, vec2 centre, float radius, float phase) {
-    vec2 delta = uv - centre;
-    delta.x *= uResolution.x / uResolution.y;
-    float angle = atan(delta.y, delta.x);
-    float wobble =
-      sin(angle * 3.0 + uTime * 0.46 + phase) * 0.040 +
-      sin(angle * 5.0 - uTime * 0.31 + phase * 1.7) * 0.018 +
-      sin(angle * 7.0 + uTime * 0.22 + phase * 0.8) * 0.010;
-    float distanceToEdge = length(delta) - wobble;
-    return smoothstep(radius + 0.028, radius - 0.022, distanceToEdge);
-  }
-
-  void main() {
-    vec2 uv = gl_FragCoord.xy / uResolution.xy;
-    vec3 colour = vec3(0.965, 0.965, 0.953);
-
-    vec2 centre = vec2(
-      0.50 + sin(uTime * 0.19) * 0.040,
-      0.70 + cos(uTime * 0.16) * 0.038
-    );
-
-    float aspect = uResolution.x / uResolution.y;
-    float radius = mix(0.235, 0.355, smoothstep(0.50, 1.20, aspect));
-    float shape = blob(uv, centre, radius, 1.2);
-    float colourMix = smoothstep(
-      centre.x - 0.30,
-      centre.x + 0.30,
-      uv.x + sin(uv.y * 5.0 + uTime * 0.12) * 0.035
-    );
-    vec3 blobColour = mix(
-      vec3(0.58, 0.70, 1.0),
-      vec3(1.0, 0.62, 0.82),
-      colourMix
-    );
-    colour = mix(colour, blobColour, shape * 0.76);
-
-    float sheen = blob(uv + vec2(0.030, -0.040), centre, radius - 0.060, 1.2);
-    colour = mix(colour, vec3(1.0), sheen * 0.085);
-
-    float grainFrame = floor(uTime * 12.0);
-    float grain = hash(gl_FragCoord.xy + grainFrame * vec2(19.0, 47.0)) - 0.5;
-    colour += grain * 0.045;
-
-    gl_FragColor = vec4(colour, 1.0);
-  }
-`
-
-function OrganicBackground() {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    let renderer: THREE.WebGLRenderer
-
-    try {
-      renderer = new THREE.WebGLRenderer({
-        antialias: false,
-        alpha: false,
-        powerPreference: 'low-power',
-      })
-    } catch {
-      return
-    }
-
-    const scene = new THREE.Scene()
-    const camera = new THREE.Camera()
-    const uniforms = {
-      uTime: { value: 0 },
-      uResolution: { value: new THREE.Vector2(1, 1) },
-    }
-    const material = new THREE.ShaderMaterial({
-      uniforms,
-      vertexShader: blobVertexShader,
-      fragmentShader: blobFragmentShader,
-      depthTest: false,
-      depthWrite: false,
-    })
-    const geometry = new THREE.PlaneGeometry(2, 2)
-    const mesh = new THREE.Mesh(geometry, material)
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const startedAt = performance.now()
-    let animationFrame = 0
-
-    renderer.domElement.className = 'h-full w-full'
-    renderer.domElement.setAttribute('aria-hidden', 'true')
-    container.appendChild(renderer.domElement)
-    scene.add(mesh)
-
-    const resize = () => {
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
-      renderer.setSize(window.innerWidth, window.innerHeight, false)
-      uniforms.uResolution.value.set(
-        renderer.domElement.width,
-        renderer.domElement.height,
-      )
-    }
-
-    const render = (now: number) => {
-      uniforms.uTime.value = reduceMotion ? 0 : (now - startedAt) / 1000
-      renderer.render(scene, camera)
-
-      if (!reduceMotion) {
-        animationFrame = window.requestAnimationFrame(render)
-      }
-    }
-
-    resize()
-    window.addEventListener('resize', resize, { passive: true })
-    render(startedAt)
-
-    return () => {
-      window.removeEventListener('resize', resize)
-      window.cancelAnimationFrame(animationFrame)
-      geometry.dispose()
-      material.dispose()
-      renderer.dispose()
-      renderer.domElement.remove()
-    }
-  }, [])
-
-  return (
-    <div
-      ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#f5f5f3]"
-      aria-hidden="true"
-    />
-  )
-}
-
 function InsetProjectCard({
   project,
   tint,
@@ -652,8 +504,7 @@ function ConceptFour() {
   ]
 
   return (
-    <div className="relative min-h-screen pb-28 text-[#20201e] selection:bg-[#1f4eea] selection:text-white">
-      <OrganicBackground />
+    <div className="relative min-h-screen bg-[#f5f5f3] pb-28 text-[#20201e] selection:bg-[#1f4eea] selection:text-white">
       <main className="relative z-10 mx-auto max-w-7xl px-5 py-6 sm:px-10 sm:py-10">
         <header className="flex items-center justify-between">
           <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
@@ -663,7 +514,7 @@ function ConceptFour() {
           </div>
         </header>
 
-        <section className="pt-[28vh] sm:pt-[36vh]">
+        <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
             <h2 className="text-sm font-semibold">Current life</h2>
             <span className="text-xs text-black/35">Four places to start</span>
