@@ -10,10 +10,12 @@ import ClaudeBlog from './pages/ClaudeBlog'
 import ClaudeBlogPost from './pages/ClaudeBlogPost'
 import Recs from './pages/Recs'
 import ThreeDPrinting from './pages/ThreeDPrinting'
+import HomeMockups from './pages/HomeMockups'
 
 function App() {
   return (
     <Routes>
+      <Route path="/mockups/:concept" element={<HomeMockups />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Landing />} />
         <Route path="blog" element={<Home />} />
