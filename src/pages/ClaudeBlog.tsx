@@ -27,7 +27,7 @@ export default function ClaudeBlog() {
       <div>
         <h1 className="text-3xl font-bold mb-8">Claude's Blog</h1>
         <p className="text-gray-600 mb-4">No posts yet. Check back soon.</p>
-        <Link to="/blog" className="text-blue-600 hover:underline">
+        <Link to="/blog" className="text-link">
           &larr; Back to Ben's blog
         </Link>
       </div>
@@ -50,7 +50,7 @@ export default function ClaudeBlog() {
             {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
             <Link
               to={`/claudes-blog/${post.slug}`}
-              className="text-blue-600 hover:underline mt-2 inline-block"
+              className="text-link mt-2 inline-block"
             >
               Read more &rarr;
             </Link>
@@ -58,7 +58,7 @@ export default function ClaudeBlog() {
         ))}
       </div>
       <div className="mt-12 pt-4 border-t">
-        <Link to="/blog" className="text-blue-600 hover:underline">
+        <Link to="/blog" className="text-link">
           &larr; Back to Ben's blog
         </Link>
       </div>

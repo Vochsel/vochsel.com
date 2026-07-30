@@ -8,21 +8,21 @@ const products = [
     alt: 'Human in the loop black T-shirt worn in the city',
     width: 1024,
     height: 1536,
-    className: 'aspect-[2/3] w-full rounded-sm object-cover',
+    className: 'site-media aspect-[2/3] w-full object-cover',
   },
   {
     src: '/clothing/human-in-the-loop-park.webp',
     alt: 'Human in the loop black T-shirt worn in a park',
     width: 1024,
     height: 1536,
-    className: 'aspect-[2/3] w-full rounded-sm object-cover',
+    className: 'site-media aspect-[2/3] w-full object-cover',
   },
   {
     src: '/clothing/em-dash-removal-club.webp',
     alt: 'Em dash removal club white ringer T-shirt worn in the city',
     width: 1536,
     height: 1024,
-    className: 'w-full rounded-sm',
+    className: 'site-media w-full',
     wide: true,
   },
 ]
@@ -41,7 +41,7 @@ export default function Clothing() {
           Clothes for humans in the loop. Small runs, questionable AI jokes, and no real desire to become a fashion empire.
         </p>
         <a
-          className="mt-5 inline-flex items-center gap-2 bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white"
+          className="primary-action mt-5"
           href={shopUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -51,14 +51,14 @@ export default function Clothing() {
       </header>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        {products.map(product => (
+        {products.map((product, index) => (
           <a
             key={product.src}
             href={shopUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="View this product on Unprompted"
-            className={'wide' in product && product.wide ? 'sm:col-span-2' : undefined}
+            className={`media-link ${'wide' in product && product.wide ? 'sm:col-span-2' : ''}`}
           >
             <img
               className={product.className}
@@ -66,6 +66,7 @@ export default function Clothing() {
               alt={product.alt}
               width={product.width}
               height={product.height}
+              loading={index === 0 ? 'eager' : 'lazy'}
             />
           </a>
         ))}

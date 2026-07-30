@@ -67,7 +67,7 @@ export default function WikiArticle() {
   if (error) {
     return (
       <div>
-        <Link to="/wiki" className="text-blue-600 hover:underline mb-4 inline-block">
+        <Link to="/wiki" className="text-link mb-4 inline-block">
           &larr; Back to wiki
         </Link>
         <div className="text-red-600">{error}</div>
@@ -79,11 +79,11 @@ export default function WikiArticle() {
     <>
       {ready && <TableOfContents />}
       <div>
-        <Link to="/wiki" className="text-blue-600 hover:underline mb-4 inline-block">
+        <Link to="/wiki" className="text-link mb-4 inline-block">
           &larr; Back to wiki
         </Link>
         {Content && (
-          <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:bg-gray-900 prose-table:text-sm prose-th:bg-gray-100 dark:prose-th:bg-gray-900 prose-th:px-3 prose-th:py-2 prose-td:px-3 prose-td:py-2 prose-td:border prose-th:border">
+          <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-pre:bg-gray-900 prose-table:text-sm prose-th:bg-gray-100 dark:prose-th:bg-gray-900 prose-th:px-3 prose-th:py-2 prose-td:px-3 prose-td:py-2 prose-td:border prose-th:border">
             <Content />
           </article>
         )}

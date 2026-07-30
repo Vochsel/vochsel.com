@@ -39,14 +39,15 @@ export default function Objects() {
       </header>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        {objectStudies.map(image => (
+        {objectStudies.map((image, index) => (
           <img
             key={image.src}
-            className="aspect-square w-full rounded-sm object-cover"
+            className="site-media aspect-square w-full object-cover"
             src={image.src}
             alt={image.alt}
             width="1254"
             height="1254"
+            loading={index === 0 ? 'eager' : 'lazy'}
           />
         ))}
       </div>

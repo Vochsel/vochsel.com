@@ -10,21 +10,21 @@ const framedArtwork = [
     alt: 'Colourful 3D artwork mocked up in a timber frame',
     width: 1402,
     height: 1122,
-    className: 'w-full rounded-sm sm:col-span-2',
+    className: 'site-media w-full sm:col-span-2',
   },
   {
     src: '/blog/unprompted-optimism/framed-white-sculpture.webp',
     alt: 'White sculptural artwork mocked up in a timber frame',
     width: 1197,
     height: 1314,
-    className: 'aspect-[4/5] h-full w-full rounded-sm object-cover',
+    className: 'site-media aspect-[4/5] h-full w-full object-cover',
   },
   {
     src: '/blog/unprompted-optimism/framed-warm-study.webp',
     alt: 'Warm abstract 3D artwork mocked up in a timber frame',
     width: 1122,
     height: 1402,
-    className: 'aspect-[4/5] h-full w-full rounded-sm object-cover',
+    className: 'site-media aspect-[4/5] h-full w-full object-cover',
   },
 ]
 
@@ -92,7 +92,7 @@ export default function Art() {
           Experiments in form, light, and procedural worlds. I'm currently working out how to turn some of them into physical, floating canvas-style prints.
         </p>
         <a
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-gray-900 underline decoration-gray-300 underline-offset-4 transition hover:decoration-gray-900"
+          className="text-link mt-5 inline-flex items-center gap-2 text-sm"
           href={instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -107,7 +107,7 @@ export default function Art() {
           Framed art preview
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {framedArtwork.map(image => (
+          {framedArtwork.map((image, index) => (
             <img
               key={image.src}
               className={image.className}
@@ -115,6 +115,7 @@ export default function Art() {
               alt={image.alt}
               width={image.width}
               height={image.height}
+              loading={index === 0 ? 'eager' : 'lazy'}
             />
           ))}
         </div>
@@ -149,18 +150,19 @@ export default function Art() {
           {recentRenders.map(image => (
             <a
               key={image.src}
-              className="w-[76%] shrink-0 snap-start sm:w-[46%]"
+              className="media-link w-[82%] shrink-0 snap-start sm:w-[46%]"
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View more artwork on Instagram"
             >
               <img
-                className="aspect-square w-full rounded-sm object-cover"
+                className="site-media aspect-square w-full object-cover"
                 src={image.src}
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
+                loading="lazy"
               />
             </a>
           ))}

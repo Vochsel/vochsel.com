@@ -6,6 +6,53 @@ body {
   @apply bg-white text-gray-900 transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100;
 }
 
+@layer components {
+  .home-project-card {
+    border-radius: 2rem;
+    clip-path: inset(0 round 2rem);
+    contain: paint;
+    transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .home-project-image {
+    transition: transform 500ms;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .home-project-card:hover .home-project-image {
+      transform: scale(1.025);
+    }
+  }
+
+  .site-media {
+    @apply rounded-sm bg-gray-100 dark:bg-gray-900;
+  }
+
+  .media-link {
+    @apply block overflow-hidden rounded-sm transition-opacity duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .media-link:hover {
+      @apply opacity-90;
+    }
+  }
+
+  .text-link {
+    @apply font-medium text-gray-700 underline decoration-gray-300 underline-offset-4 transition-colors hover:text-gray-900 hover:decoration-gray-900 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:text-gray-300 dark:decoration-gray-700 dark:hover:text-gray-100 dark:hover:decoration-gray-300 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950;
+  }
+
+  .card-link {
+    @apply rounded-sm border border-gray-200 transition-colors hover:border-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:border-gray-800 dark:hover:border-gray-600 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950;
+  }
+
+  .primary-action {
+    @apply inline-flex items-center gap-2 rounded-sm bg-gray-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950;
+  }
+}
+
 /* Sensible dark defaults for the shared site shell. Bespoke homepage colours
    are handled on the homepage itself. */
 .dark .site-shell .text-gray-900 { color: rgb(243 244 246); }
@@ -47,6 +94,33 @@ code {
 .dark :not(pre) > code {
   background-color: rgb(31 41 55);
   color: rgb(229 231 235);
+}
+
+.site-shell .prose a {
+  color: rgb(55 65 81);
+  font-weight: 500;
+  text-decoration-color: rgb(209 213 219);
+  text-underline-offset: 4px;
+  transition: color 150ms, text-decoration-color 150ms;
+}
+
+.site-shell .prose a:hover {
+  color: rgb(17 24 39);
+  text-decoration-color: rgb(17 24 39);
+}
+
+.dark .site-shell .prose a {
+  color: rgb(209 213 219);
+  text-decoration-color: rgb(55 65 81);
+}
+
+.dark .site-shell .prose a:hover {
+  color: rgb(243 244 246);
+  text-decoration-color: rgb(209 213 219);
+}
+
+.site-shell .prose img {
+  border-radius: 0.125rem;
 }
 
 /* Remove backticks from inline code */

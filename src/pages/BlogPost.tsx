@@ -69,7 +69,7 @@ export default function BlogPost() {
   if (error) {
     return (
       <div>
-        <Link to="/blog" className="text-blue-600 hover:underline mb-4 inline-block">
+        <Link to="/blog" className="text-link mb-4 inline-block">
           &larr; Back to blog
         </Link>
         <div className="text-red-600">{error}</div>
@@ -79,12 +79,12 @@ export default function BlogPost() {
 
   return (
     <div>
-      <Link to="/blog" className="text-blue-600 hover:underline mb-4 inline-block">
+      <Link to="/blog" className="text-link mb-4 inline-block">
         &larr; Back to blog
       </Link>
       <time className="block text-gray-500 text-sm mb-6">{slug ? formatDate(slug) : ''}</time>
       {Content && (
-        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:bg-gray-900">
+        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-pre:bg-gray-900">
           <Content components={{ p: QuoteParagraph }} />
         </article>
       )}

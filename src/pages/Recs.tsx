@@ -61,7 +61,7 @@ export default function Recs() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    className="text-link block text-sm"
                   >
                     ↳ {link.name}
                   </a>
@@ -72,7 +72,7 @@ export default function Recs() {
         ))}
       </div>
       <div className="mt-12">
-        <Link to="/blog" className="text-blue-600 hover:underline">
+        <Link to="/blog" className="text-link">
           &larr; Back to blog
         </Link>
       </div>

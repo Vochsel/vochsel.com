@@ -65,7 +65,7 @@ export default function TableOfContents() {
               }}
               className={`block hover:text-gray-900 transition-colors ${
                 activeId === id
-                  ? 'text-blue-600 font-medium'
+                  ? 'text-gray-900 font-medium'
                   : 'text-gray-500'
               }`}
             >

@@ -33,7 +33,7 @@ export default function Home() {
 
         <Link
           to="/blog/3d-printing"
-          className="group mt-8 grid overflow-hidden rounded-sm border border-gray-200 transition hover:border-gray-400 sm:grid-cols-[13rem_1fr]"
+          className="card-link group mt-8 grid overflow-hidden sm:grid-cols-[13rem_1fr]"
         >
           <img
             className="aspect-video h-full w-full object-cover sm:aspect-auto"
@@ -69,7 +69,7 @@ export default function Home() {
                   </Link>
                   <time className="text-sm text-gray-500">{formatDate(post.date)}</time>
                   {post.excerpt && <p className="mt-2 text-gray-600">{post.excerpt}</p>}
-                  <Link to={`/blog/${post.slug}`} className="mt-2 inline-block text-blue-600 hover:underline">
+                  <Link to={`/blog/${post.slug}`} className="text-link mt-2 inline-block">
                     Read more &rarr;
                   </Link>
                 </article>

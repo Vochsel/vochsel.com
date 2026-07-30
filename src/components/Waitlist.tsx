@@ -119,7 +119,7 @@ function WaitlistForm({ variant, source }: WaitlistProps) {
         </div>
 
         <button
-          className="bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
+          className="primary-action justify-center disabled:cursor-not-allowed disabled:bg-gray-400 dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
           type="submit"
           disabled={disabled}
         >

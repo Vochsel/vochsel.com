@@ -26,7 +26,7 @@ export default function WikiIndex() {
           <Link
             key={page.slug}
             to={`/wiki/${page.slug}`}
-            className="block p-4 border rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-colors"
+            className="card-link block p-4 hover:bg-gray-50 dark:hover:bg-gray-900"
           >
             <h2 className="font-semibold text-lg">{page.title}</h2>
             <p className="text-gray-600 text-sm mt-1">{page.description}</p>

@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import { Link } from 'react-router-dom'
 import ThemeToggle from '../components/ThemeToggle'
 import { archiveLinks, currentProjects, pastProjects, type CurrentProject, type PastProject } from '../data/siteLinks'
 
@@ -11,10 +12,22 @@ function Arrow() {
   return <span aria-hidden="true">↗</span>
 }
 
-function ProjectCard({ project, tint, wide = false }: { project: CurrentProject; tint: string; wide?: boolean }) {
+function ProjectCard({
+  project,
+  tint,
+  wide = false,
+  eager = false,
+}: {
+  project: CurrentProject
+  tint: string
+  wide?: boolean
+  eager?: boolean
+}) {
   const cardRef = useRef<HTMLAnchorElement>(null)
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType !== 'mouse') return
+
     const card = cardRef.current
     if (!card) return
 
@@ -39,18 +52,21 @@ function ProjectCard({ project, tint, wide = false }: { project: CurrentProject;
   }
 
   return (
-    <a
+    <Link
       ref={cardRef}
-      href={project.href}
+      to={project.href}
       onPointerMove={handlePointerMove}
+      onPointerDown={resetParallax}
       onPointerLeave={resetParallax}
-      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl dark:border-white/10 sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
+      onPointerCancel={resetParallax}
+      className={`home-project-card group relative isolate flex min-h-64 min-w-0 overflow-hidden border border-white/65 p-5 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-black/40 dark:border-white/10 dark:focus-visible:ring-white/40 sm:min-h-72 sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
     >
       <img
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 transition-transform duration-500 group-hover:scale-[1.025] dark:opacity-30 dark:mix-blend-luminosity"
+        className="home-project-image pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 dark:opacity-30 dark:mix-blend-luminosity"
         src={project.image}
         alt={project.imageAlt}
         style={{ objectPosition: project.imagePosition }}
+        loading={eager ? 'eager' : 'lazy'}
       />
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/55 via-white/5 to-white/20 dark:from-black/70 dark:via-black/10 dark:to-black/25" />
       <span
@@ -71,11 +87,11 @@ function ProjectCard({ project, tint, wide = false }: { project: CurrentProject;
           </span>
         </span>
         <span>
-          <span className="block text-4xl font-medium tracking-[-0.06em] sm:text-5xl">{project.name}</span>
+          <span className="block text-[2.15rem] font-medium tracking-[-0.06em] sm:text-5xl">{project.name}</span>
           <span className="mt-3 block max-w-sm text-sm leading-6 text-black/50 dark:text-white/55">{project.description}</span>
         </span>
       </span>
-    </a>
+    </Link>
   )
 }
 
@@ -123,13 +139,14 @@ export default function Landing() {
 
   return (
     <div className="relative min-h-screen bg-[#f5f5f3] text-[#20201e] selection:bg-[#1f4eea] selection:text-white dark:bg-[#10110f] dark:text-[#f1f1ec]">
-      <main className="relative z-10 mx-auto max-w-7xl px-5 py-6 sm:px-10 sm:py-10">
+      <main className="relative z-10 mx-auto max-w-7xl px-4 py-5 sm:px-10 sm:py-10">
         <header className="flex items-center justify-between">
           <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md dark:border-white/10 dark:bg-white/5">
               <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
-              33.8997° S, 151.1710° E
+              <span className="sm:hidden">Sydney</span>
+              <span className="hidden sm:inline">33.8997° S, 151.1710° E</span>
             </div>
             <ThemeToggle subtle />
           </div>
@@ -137,10 +154,10 @@ export default function Landing() {
 
         <h1 className="sr-only">Ben Skinner — 3D art, music, objects and writing</h1>
 
-        <section className="pt-20 sm:pt-28">
+        <section className="pt-14 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
             <h2 className="text-sm font-semibold">Currently</h2>
-            <span className="text-xs text-black/35 dark:text-white/35">Five places to start</span>
+            <span className="hidden text-xs text-black/35 min-[360px]:inline dark:text-white/35">Five places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {currentProjects.map((project, index) => (
@@ -149,12 +166,13 @@ export default function Landing() {
                 project={project}
                 tint={cardColours[index]}
                 wide={index === currentProjects.length - 1}
+                eager={index < 2}
               />
             ))}
           </div>
         </section>
 
-        <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:mt-28 sm:p-8">
+        <section className="mt-16 rounded-[2rem] border border-white/65 bg-white/55 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:mt-28 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
             <div>
               <h2 className="text-sm font-semibold">Previously</h2>
@@ -204,9 +222,9 @@ export default function Landing() {
           </div>
         </section>
 
-        <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/45 dark:border-white/10 dark:text-white/45">
+        <footer className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/45 dark:border-white/10 dark:text-white/45 sm:mt-20 sm:flex-row sm:items-center">
           <span>© 2026 Ben Skinner</span>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
             {archiveLinks.map(link => (
               <a key={link.name} href={link.href} {...externalProps(link.href)} className="hover:text-black dark:hover:text-white">
                 {link.name}

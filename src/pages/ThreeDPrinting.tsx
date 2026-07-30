@@ -121,7 +121,7 @@ export default function ThreeDPrinting() {
         </h1>
       </header>
 
-      <div className="overflow-hidden rounded-xl bg-gray-950 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
+      <div className="site-media overflow-hidden bg-gray-950 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
         <div className="aspect-video">
           <iframe
             className="h-full w-full"
@@ -154,7 +154,7 @@ export default function ThreeDPrinting() {
               href="https://procgeo.vochsel.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-900"
+              className="text-link"
             >
               rs-procgeo
             </a>
@@ -165,7 +165,7 @@ export default function ThreeDPrinting() {
               href="https://printa.vochsel.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-gray-900 underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-gray-900"
+              className="text-link"
             >
               Printa
             </a>
@@ -181,7 +181,7 @@ export default function ThreeDPrinting() {
           href={livestreamUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900"
+          className="text-link mt-5 inline-flex items-center gap-2 text-sm"
         >
           Watch on YouTube <span aria-hidden="true">↗</span>
         </a>
@@ -202,7 +202,7 @@ export default function ThreeDPrinting() {
 
         <ol className="space-y-6">
           {prints.map((print) => (
-            <li key={print.name} className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+            <li key={print.name} className="site-media overflow-hidden border border-gray-200 bg-white">
               {print.video && (
                 <video
                   className="aspect-video w-full bg-gray-950 object-cover"
@@ -253,7 +253,7 @@ export default function ThreeDPrinting() {
                         href={print.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-gray-500 transition-colors hover:text-gray-900"
+                        className="text-link"
                       >
                         {print.linkLabel} <span aria-hidden="true">↗</span>
                       </a>

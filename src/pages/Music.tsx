@@ -61,7 +61,7 @@ export default function Music() {
         {musicLinks.map(link => (
           <a
             key={link.name}
-            className="group flex min-h-36 flex-col justify-between rounded-sm border border-gray-200 p-5 transition hover:border-gray-400"
+            className="card-link group flex min-h-36 flex-col justify-between p-5"
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
@@ -91,17 +91,18 @@ export default function Music() {
             return (
               <section key={album.spotifyId} className="grid gap-6 sm:grid-cols-[12rem_1fr]">
                 <div>
-                  <a href={albumUrl} target="_blank" rel="noopener noreferrer">
+                  <a className="media-link" href={albumUrl} target="_blank" rel="noopener noreferrer">
                     <img
-                      className="aspect-square w-full rounded-sm object-cover"
+                      className="site-media aspect-square w-full object-cover"
                       src={album.cover}
                       alt={`${album.title} album cover`}
                       width="640"
                       height="640"
+                      loading="lazy"
                     />
                   </a>
                   <a
-                    className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-gray-600 transition hover:text-gray-900"
+                    className="text-link mt-3 inline-flex items-center gap-2 text-sm"
                     href={albumUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -120,7 +121,7 @@ export default function Music() {
                     {album.tracks.map((track, index) => (
                       <li key={track.spotifyId}>
                         <a
-                          className="group grid grid-cols-[2rem_1fr_auto] items-center gap-2 py-3 text-sm"
+                          className="group -mx-2 grid grid-cols-[2rem_1fr_auto] items-center gap-2 rounded-sm px-2 py-3 text-sm transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 dark:hover:bg-gray-900 dark:focus-visible:ring-gray-100"
                           href={`https://open.spotify.com/track/${track.spotifyId}`}
                           target="_blank"
                           rel="noopener noreferrer"
