@@ -4,24 +4,60 @@ import { usePageTitle } from '../hooks/usePageTitle'
 
 const instagramUrl = 'https://www.instagram.com/vochsel'
 
-const artwork = [
+const framedArtwork = [
   {
     src: '/blog/unprompted-optimism/framed-colour-study.webp',
     alt: 'Colourful 3D artwork mocked up in a timber frame',
     width: 1402,
     height: 1122,
+    className: 'w-full rounded-sm sm:col-span-2',
   },
   {
     src: '/blog/unprompted-optimism/framed-white-sculpture.webp',
     alt: 'White sculptural artwork mocked up in a timber frame',
     width: 1197,
     height: 1314,
+    className: 'aspect-[4/5] h-full w-full rounded-sm object-cover',
   },
   {
     src: '/blog/unprompted-optimism/framed-warm-study.webp',
     alt: 'Warm abstract 3D artwork mocked up in a timber frame',
     width: 1122,
     height: 1402,
+    className: 'aspect-[4/5] h-full w-full rounded-sm object-cover',
+  },
+]
+
+const recentRenders = [
+  {
+    src: '/art/folded-white-sculpture.webp',
+    alt: 'Close-up render of a folded white sculptural form',
+    width: 2048,
+    height: 2048,
+  },
+  {
+    src: '/art/folded-blue-sculpture.webp',
+    alt: 'Blue folded sculptural form on a green background',
+    width: 512,
+    height: 512,
+  },
+  {
+    src: '/art/glitched-tree.webp',
+    alt: 'Tree distorted into horizontal digital streaks',
+    width: 1842,
+    height: 1840,
+  },
+  {
+    src: '/art/colour-rings.webp',
+    alt: 'Colourful floating rings forming an abstract sphere',
+    width: 1768,
+    height: 1726,
+  },
+  {
+    src: '/art/chrome-folded-sculpture.webp',
+    alt: 'Chrome folded sculptural form on white',
+    width: 1714,
+    height: 1774,
   },
 ]
 
@@ -64,7 +100,25 @@ export default function Art() {
         </a>
       </header>
 
-      <section className="mt-10" aria-labelledby="recent-renders-heading">
+      <section className="mt-10" aria-labelledby="framed-art-heading">
+        <h2 id="framed-art-heading" className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-400">
+          Framed art preview
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {framedArtwork.map(image => (
+            <img
+              key={image.src}
+              className={image.className}
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-14" aria-labelledby="recent-renders-heading">
         <div className="mb-4 flex items-center justify-between">
           <h2 id="recent-renders-heading" className="text-xs font-medium uppercase tracking-wider text-gray-400">
             Recent renders
@@ -90,17 +144,17 @@ export default function Art() {
         </div>
 
         <div ref={carouselRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3">
-          {artwork.map(image => (
+          {recentRenders.map(image => (
             <a
               key={image.src}
-              className="w-[82%] shrink-0 snap-start sm:w-[58%]"
+              className="w-[76%] shrink-0 snap-start sm:w-[46%]"
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View more artwork on Instagram"
             >
               <img
-                className="aspect-[4/5] w-full rounded-sm object-cover"
+                className="aspect-square w-full rounded-sm object-cover"
                 src={image.src}
                 alt={image.alt}
                 width={image.width}
