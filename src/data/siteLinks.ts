@@ -55,9 +55,8 @@ export const currentProjects: CurrentProject[] = [
     href: '/clothing',
     type: 'Clothing',
     description: 'Small runs and questionable AI jokes from Unprompted.',
-    image: '/clothing/human-in-the-loop-city.webp',
-    imageAlt: 'Human in the loop black T-shirt',
-    imagePosition: 'center 35%',
+    image: '/clothing/em-dash-removal-club.webp',
+    imageAlt: 'Em dash removal club white ringer T-shirt',
   },
 ]
 
