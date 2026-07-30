@@ -32,7 +32,7 @@ Use memorable, conversational titles. A slightly odd phrase or familiar technica
 - Keep paragraphs short, usually one to three sentences.
 - Mix straightforward sentences with fragments for emphasis.
 - Use contractions throughout.
-- Ask rhetorical questions, sometimes answering them immediately.
+- Use rhetorical questions to frame genuine uncertainty, not as a repeated “Problem? Solution.” device. Avoid chains of punchy mini-examples.
 - Use parentheses and dashes for asides, pivots, and qualifications.
 - Use occasional one-line paragraphs to let an admission or question land.
 - Prefer concrete examples, products, conversations, and numbers over abstract claims.
