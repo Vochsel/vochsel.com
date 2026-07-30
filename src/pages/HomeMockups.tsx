@@ -356,6 +356,13 @@ function InsetProjectCard({
       onPointerLeave={resetParallax}
       className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl sm:p-8 ${tint}`}
     >
+      <img
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 transition-transform duration-500 group-hover:scale-[1.025]"
+        src={project.image}
+        alt={project.imageAlt}
+        style={{ objectPosition: project.imagePosition }}
+      />
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/55 via-white/5 to-white/20" />
       <span
         className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out"
         style={{ transform: 'translate3d(var(--glow-x, 0px), var(--glow-y, 0px), 0) scale(1.1)' }}

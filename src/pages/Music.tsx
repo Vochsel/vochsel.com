@@ -47,7 +47,32 @@ export default function Music() {
         <p className="mt-5 text-lg leading-8 text-gray-600">Heavily inspired, Fred Again.. knockoff.</p>
       </header>
 
-      <div className="mt-10 grid gap-3 sm:grid-cols-2">
+      <a
+        className="group mt-10 grid overflow-hidden rounded-sm border border-gray-200 transition hover:border-gray-400 sm:grid-cols-[minmax(0,1fr)_minmax(16rem,.8fr)]"
+        href="https://open.spotify.com/artist/2wwOqc2fFVZj7D06QzxrrJ"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="aspect-square h-full w-full object-cover"
+          src="/music/whale-tapes.webp"
+          alt="Whale Tapes album artwork over the ocean at sunset"
+          width="1266"
+          height="1314"
+        />
+        <span className="flex min-h-48 flex-col justify-between p-6">
+          <span className="text-xs font-medium uppercase tracking-wider text-gray-400">Album</span>
+          <span>
+            <span className="flex items-end justify-between text-3xl font-medium">
+              Whale Tapes
+              <span className="text-base text-gray-400 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">↗</span>
+            </span>
+            <span className="mt-2 block text-sm text-gray-500">Listen on Spotify</span>
+          </span>
+        </span>
+      </a>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {musicLinks.map(link => (
           <a
             key={link.name}

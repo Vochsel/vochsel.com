@@ -3,6 +3,9 @@ export interface CurrentProject {
   href: string
   type: string
   description: string
+  image: string
+  imageAlt: string
+  imagePosition?: string
 }
 
 export interface PastProject {
@@ -19,30 +22,42 @@ export const currentProjects: CurrentProject[] = [
     href: '/art',
     type: 'Visual',
     description: 'Experiments in form, light, and procedural worlds.',
+    image: '/art/folded-white-sculpture.webp',
+    imageAlt: 'Folded white sculptural render',
   },
   {
     name: '/music',
     href: '/music',
     type: 'Sound',
     description: 'Electronic sketches, loops, and unfinished feelings.',
+    image: '/music/whale-tapes.webp',
+    imageAlt: 'Whale Tapes album artwork over the ocean at sunset',
   },
   {
     name: '/blog',
     href: '/blog',
     type: 'Writing',
     description: 'Notes on tools, making, and the 3D printing log.',
+    image: '/prints/zenith-twist-vase-front.jpg',
+    imageAlt: 'Metallic 3D-printed twist vase',
+    imagePosition: 'center 55%',
   },
   {
     name: '/objects',
     href: '/objects',
     type: 'Objects',
     description: 'Upcoming interior objects and quieter smart-home interfaces.',
+    image: '/objects/smart-drink-coaster.webp',
+    imageAlt: 'Green stone-like smart drink coaster',
   },
   {
     name: '/clothing',
     href: '/clothing',
     type: 'Clothing',
     description: 'Small runs and questionable AI jokes from Unprompted.',
+    image: '/clothing/human-in-the-loop-city.webp',
+    imageAlt: 'Human in the loop black T-shirt',
+    imagePosition: 'center 35%',
   },
 ]
 
