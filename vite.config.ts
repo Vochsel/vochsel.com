@@ -127,7 +127,12 @@ function blogMetaPlugin(): Plugin {
         }
       }
 
-      console.log('Generated blog metadata pages')
+      writeFileSync(resolve(distDir, 'art.html'), setHtmlTitle(template, '3D art'))
+      writeFileSync(resolve(distDir, 'music.html'), setHtmlTitle(template, 'Music'))
+      writeFileSync(resolve(distDir, 'objects.html'), setHtmlTitle(template, 'Objects'))
+      writeFileSync(resolve(distDir, 'blog', '3d-printing.html'), setHtmlTitle(template, '3D printing'))
+
+      console.log('Generated page metadata')
     },
   }
 }

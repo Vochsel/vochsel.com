@@ -1,5 +1,11 @@
 {
+  "redirects": [
+    { "source": "/3d-printing", "destination": "/blog/3d-printing", "permanent": true }
+  ],
   "rewrites": [
+    { "source": "/art", "destination": "/art.html" },
+    { "source": "/music", "destination": "/music.html" },
+    { "source": "/objects", "destination": "/objects.html" },
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" },
     { "source": "/claudes-blog/:slug", "destination": "/claudes-blog/:slug.html" },
     { "source": "/(.*)", "destination": "/index.html" }

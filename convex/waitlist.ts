@@ -5,6 +5,11 @@ export const join = mutation({
   args: {
     email: v.string(),
     country: v.string(),
+    variant: v.union(
+      v.literal('art'),
+      v.literal('object'),
+      v.literal('music'),
+    ),
     source: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -21,7 +26,9 @@ export const join = mutation({
 
     const existingSignup = await ctx.db
       .query('artWaitlist')
-      .withIndex('by_email', query => query.eq('email', email))
+      .withIndex('by_email_and_variant', query =>
+        query.eq('email', email).eq('variant', args.variant),
+      )
       .unique()
 
     if (existingSignup) {
@@ -29,9 +36,21 @@ export const join = mutation({
       return { status: 'already_joined' as const }
     }
 
+    const legacySignup = await ctx.db
+      .query('artWaitlist')
+      .withIndex('by_email', query => query.eq('email', email))
+      .filter(query => query.eq(query.field('variant'), undefined))
+      .first()
+
+    if (legacySignup) {
+      await ctx.db.patch(legacySignup._id, { country, variant: args.variant })
+      return { status: 'already_joined' as const }
+    }
+
     await ctx.db.insert('artWaitlist', {
       email,
       country,
+      variant: args.variant,
       source: args.source,
       createdAt: Date.now(),
     })

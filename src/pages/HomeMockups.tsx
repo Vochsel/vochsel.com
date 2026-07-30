@@ -1,79 +1,7 @@
 import { useRef } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
-
-const currentProjects = [
-  {
-    name: '3D art',
-    href: 'https://www.instagram.com/vochsel',
-    type: 'Visual',
-    description: 'Experiments in form, light, and procedural worlds.',
-  },
-  {
-    name: 'Music',
-    href: 'https://open.spotify.com/artist/2wwOqc2fFVZj7D06QzxrrJ',
-    type: 'Sound',
-    description: 'Electronic sketches, loops, and unfinished feelings.',
-  },
-  {
-    name: 'Blog',
-    href: '/blog',
-    type: 'Writing',
-    description: 'Notes on tools, making, and whatever is currently interesting.',
-  },
-  {
-    name: '3D printing',
-    href: '/3d-printing',
-    type: 'Objects',
-    description: 'Prints, timelapses, and experiments from the workshop.',
-  },
-]
-
-const pastProjects = [
-  {
-    name: 'dump',
-    href: 'https://dump.page',
-    favicon: 'https://dump.page/favicon.ico',
-    description: 'Shared context for humans and AI',
-  },
-  {
-    name: 'Hoo',
-    href: 'https://get-hoo.com',
-    favicon: 'https://www.get-hoo.com/favicon.svg',
-    description: 'Spatial agent and web orchestrator',
-  },
-  {
-    name: 'walkie-talkie',
-    href: 'https://walkie-talkie.dev',
-    favicon: 'https://walkie-talkie.dev/icon.svg',
-    description: 'Access your local terminal from your web browser',
-  },
-  {
-    name: 'rs-procgeo',
-    href: 'https://procgeo.vochsel.com',
-    github: 'https://github.com/Vochsel/rs-procgeo',
-    description: 'Rust-based procedural geometry, texturing, and scene library',
-  },
-  {
-    name: 'kanban-cli',
-    href: 'https://kanban-cli.vochsel.com',
-    favicon: 'https://kanban-cli.vochsel.com/favicon.svg',
-    github: 'https://github.com/Vochsel/kanban-cli',
-    description: 'One-line UI for markdown kanban files',
-  },
-  {
-    name: 'magpai',
-    href: 'https://magpai.app',
-    favicon: 'https://magpai.app/favicon.ico',
-    description: "Your business's AI operating system",
-  },
-]
-
-const archiveLinks = [
-  { name: 'wiki', href: '/wiki' },
-  { name: 'portfolio', href: 'https://benjaminskinner.com.au' },
-  { name: 'shaders', href: 'https://www.shadertoy.com/user/vochsel' },
-]
+import { archiveLinks, currentProjects, pastProjects } from '../data/siteLinks'
 
 const externalProps = (href: string) => href.startsWith('http')
   ? { target: '_blank', rel: 'noopener noreferrer' }
@@ -566,8 +494,7 @@ function ConceptFour() {
                     )}
                     <a
                       href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      {...externalProps(project.href)}
                       aria-label={`Open ${project.name}`}
                       title="Open product"
                       className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black"
