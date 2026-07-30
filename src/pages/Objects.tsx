@@ -11,12 +11,12 @@ const objectStudies = [
     alt: 'Circular stone-like smart home display mounted on a wall',
   },
   {
-    src: '/blog/unprompted-optimism/framed-warm-study.webp',
-    alt: 'Warm abstract artwork framed in a softly lit interior',
+    src: '/objects/bedside-smart-display.webp',
+    alt: 'Pink stone-like circular smart display on a bedside table',
   },
   {
-    src: '/blog/unprompted-optimism/framed-colour-study.webp',
-    alt: 'Colourful 3D artwork framed in a light timber interior',
+    src: '/objects/smart-speaker-display.webp',
+    alt: 'Pink stone-like smart speaker with an integrated display',
   },
 ]
 
