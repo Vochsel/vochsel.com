@@ -83,7 +83,7 @@ function ConceptOne() {
         <section className="grid gap-12 py-14 lg:grid-cols-12 lg:py-20">
           <div className="lg:col-span-8">
             <div className="mb-8 flex items-center justify-between">
-              <h2 className="text-xs font-semibold uppercase tracking-[0.2em]">Current life</h2>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em]">Currently</h2>
               <span className="text-xs text-black/45">Four ongoing threads</span>
             </div>
             <div className="border-t border-black">
@@ -108,7 +108,7 @@ function ConceptOne() {
           </div>
 
           <aside className="lg:col-span-4 lg:pl-10">
-            <h2 className="mb-8 text-xs font-semibold uppercase tracking-[0.2em]">Past life</h2>
+            <h2 className="mb-8 text-xs font-semibold uppercase tracking-[0.2em]">Previously</h2>
             <ol className="space-y-5">
               {pastProjects.map((project, index) => (
                 <li key={project.name} className="flex gap-4">
@@ -260,7 +260,7 @@ function ConceptThree() {
         <section>
           <div className="grid border-b-2 border-black lg:grid-cols-[.7fr_1.3fr]">
             <h2 className="border-b-2 border-black p-5 text-xs font-bold uppercase tracking-[0.2em] sm:p-10 lg:border-b-0 lg:border-r-2">
-              01 / Current life
+              01 / Currently
             </h2>
             <div>
               {currentProjects.map((project, index) => (
@@ -284,7 +284,7 @@ function ConceptThree() {
 
         <section className="grid border-b-2 border-black lg:grid-cols-[.7fr_1.3fr]">
           <div className="border-b-2 border-black p-5 sm:p-10 lg:border-b-0 lg:border-r-2">
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em]">02 / Past life</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em]">02 / Previously</h2>
           </div>
           <div className="grid sm:grid-cols-2">
             {pastProjects.map((project, index) => (
@@ -452,7 +452,7 @@ function ConceptFour() {
 
         <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
-            <h2 className="text-sm font-semibold">Current life</h2>
+            <h2 className="text-sm font-semibold">Currently</h2>
             <span className="text-xs text-black/35">Four places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
@@ -469,7 +469,7 @@ function ConceptFour() {
         <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl sm:mt-28 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
             <div>
-              <h2 className="text-sm font-semibold">Past life</h2>
+              <h2 className="text-sm font-semibold">Previously</h2>
               <p className="mt-2 text-sm text-black/40">Things that taught me something.</p>
             </div>
             <div className="grid sm:grid-cols-2">
@@ -567,7 +567,7 @@ function ConceptFive() {
 
         <section className="grid border-b border-black lg:grid-cols-[1fr_2fr]">
           <div className="border-b border-black py-8 pr-0 lg:border-b-0 lg:border-r lg:pr-10">
-            <p className="text-xs uppercase tracking-[0.18em]">Current life</p>
+            <p className="text-xs uppercase tracking-[0.18em]">Currently</p>
           </div>
           <div className="lg:pl-10">
             {currentProjects.map((project, index) => (
@@ -589,7 +589,7 @@ function ConceptFive() {
 
         <section className="grid border-b border-black lg:grid-cols-[1fr_2fr]">
           <div className="border-b border-black py-8 pr-0 lg:border-b-0 lg:border-r lg:pr-10">
-            <p className="text-xs uppercase tracking-[0.18em]">Past life</p>
+            <p className="text-xs uppercase tracking-[0.18em]">Previously</p>
           </div>
           <div className="grid py-4 lg:grid-cols-2 lg:gap-x-10 lg:pl-10">
             {pastProjects.map((project, index) => (

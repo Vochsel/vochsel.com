@@ -133,7 +133,7 @@ export default function Landing() {
 
         <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
-            <h1 className="text-sm font-semibold">Current life</h1>
+            <h1 className="text-sm font-semibold">Currently</h1>
             <span className="text-xs text-black/35">Five places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
@@ -151,7 +151,7 @@ export default function Landing() {
         <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl sm:mt-28 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
             <div>
-              <h2 className="text-sm font-semibold">Past life</h2>
+              <h2 className="text-sm font-semibold">Previously</h2>
               <p className="mt-2 text-sm text-black/40">Things that taught me something.</p>
             </div>
             <div className="grid sm:grid-cols-2">
