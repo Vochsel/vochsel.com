@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /new-blog
+Disallow: /mockups/
+
+Sitemap: https://vochsel.com/sitemap.xml

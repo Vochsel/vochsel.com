@@ -98,6 +98,64 @@ function rssPlugin(): Plugin {
   }
 }
 
+function generateSitemap(): string {
+  const today = new Date().toISOString().slice(0, 10)
+  const staticPaths = [
+    '/',
+    '/art',
+    '/music',
+    '/objects',
+    '/clothing',
+    '/blog',
+    '/blog/3d-printing',
+    '/wiki',
+    '/claudes-blog',
+    '/recs',
+  ]
+
+  const entries: Array<{ path: string; lastmod?: string }> = staticPaths.map(path => ({ path }))
+
+  for (const post of readPosts('blog').filter(post => post.visible && post.date <= today)) {
+    entries.push({ path: `/blog/${post.slug}`, lastmod: post.date })
+  }
+
+  for (const post of readPosts('claude-blog').filter(post => post.visible && post.date <= today)) {
+    entries.push({ path: `/claudes-blog/${post.slug}`, lastmod: post.date })
+  }
+
+  const wikiDir = resolve(__dirname, 'src', 'content', 'wiki')
+  for (const file of readdirSync(wikiDir).filter(file => file.endsWith('.mdx')).sort()) {
+    entries.push({ path: `/wiki/${file.replace('.mdx', '')}` })
+  }
+
+  const urls = entries.map(entry => `  <url>
+    <loc>${escapeXml(`${SITE_URL}${entry.path}`)}</loc>${entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : ''}
+  </url>`).join('\n')
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>`
+}
+
+function sitemapPlugin(): Plugin {
+  return {
+    name: 'sitemap',
+    configureServer(server) {
+      server.middlewares.use('/sitemap.xml', (_req, res) => {
+        res.setHeader('Content-Type', 'application/xml')
+        res.end(generateSitemap())
+      })
+    },
+    closeBundle() {
+      const distDir = resolve(__dirname, 'dist')
+      mkdirSync(distDir, { recursive: true })
+      writeFileSync(resolve(distDir, 'sitemap.xml'), generateSitemap())
+      console.log('Generated dist/sitemap.xml')
+    },
+  }
+}
+
 function setHtmlTitle(template: string, title: string): string {
   const escapedTitle = escapeXml(title)
   return template
@@ -146,6 +204,7 @@ export default defineConfig({
     }) },
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
     rssPlugin(),
+    sitemapPlugin(),
     blogMetaPlugin(),
   ],
   assetsInclude: ['**/*.md'],
