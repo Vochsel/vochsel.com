@@ -99,18 +99,6 @@ export const pastProjects: PastProject[] = [
     favicon: 'https://magpai.app/favicon.ico',
     description: "Your business's AI operating system",
   },
-  {
-    name: 'GitHub',
-    href: 'https://github.com/Vochsel',
-    favicon: 'https://github.githubassets.com/favicons/favicon.svg',
-    description: 'Code, experiments, and unfinished things',
-  },
-  {
-    name: 'RSS',
-    href: '/feed.xml',
-    favicon: '/favicon.svg',
-    description: 'The blog feed',
-  },
 ]
 
 export const archiveLinks = [
