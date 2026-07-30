@@ -78,7 +78,7 @@ export default function ClaudeBlogPost() {
       </Link>
       <time className="block text-gray-500 text-sm mb-6">{slug ? formatDate(slug) : ''}</time>
       {Content && (
-        <article className="prose prose-lg max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 prose-pre:bg-gray-900">
+        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:bg-gray-900">
           <Content components={{ p: QuoteParagraph }} />
         </article>
       )}

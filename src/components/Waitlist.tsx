@@ -69,7 +69,7 @@ export default function Waitlist({
   const countryId = `${variant}-waitlist-country`
 
   return (
-    <aside className="not-prose my-10 w-full border-y border-gray-200 py-7">
+    <aside className="not-prose my-10 w-full border-y border-gray-200 py-7 dark:border-gray-800">
       <p className="font-serif text-2xl text-gray-900">{content.heading}</p>
       <p className="mt-2 max-w-xl text-sm leading-6 text-gray-500">{content.description}</p>
 
@@ -77,7 +77,7 @@ export default function Waitlist({
         <label className="sr-only" htmlFor={emailId}>Email address</label>
         <input
           id={emailId}
-          className="min-w-0 flex-1 border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-900"
+          className="min-w-0 flex-1 border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-gray-400"
           type="email"
           name="email"
           autoComplete="email"
@@ -92,7 +92,7 @@ export default function Waitlist({
         <div className="relative shrink-0 sm:w-48">
           <select
             id={countryId}
-            className="w-full appearance-none border border-gray-300 bg-white py-3 pl-4 pr-11 text-sm text-gray-900 outline-none transition focus:border-gray-900"
+            className="w-full appearance-none border border-gray-300 bg-white py-3 pl-4 pr-11 text-sm text-gray-900 outline-none transition focus:border-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-gray-400"
             name="country"
             autoComplete="country"
             value={country}
@@ -118,7 +118,7 @@ export default function Waitlist({
         </div>
 
         <button
-          className="bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+          className="bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
           type="submit"
           disabled={disabled}
         >

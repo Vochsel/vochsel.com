@@ -70,7 +70,7 @@ export default function WikiArticle() {
           &larr; Back to wiki
         </Link>
         {Content && (
-          <article className="prose prose-lg max-w-none prose-headings:scroll-mt-20 prose-a:text-blue-600 prose-pre:bg-gray-900 prose-table:text-sm prose-th:bg-gray-100 prose-th:px-3 prose-th:py-2 prose-td:px-3 prose-td:py-2 prose-td:border prose-th:border">
+          <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:bg-gray-900 prose-table:text-sm prose-th:bg-gray-100 dark:prose-th:bg-gray-900 prose-th:px-3 prose-th:py-2 prose-td:px-3 prose-td:py-2 prose-td:border prose-th:border">
             <Content />
           </article>
         )}

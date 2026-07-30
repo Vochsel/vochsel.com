@@ -39,7 +39,7 @@ export default function Clothing() {
           Clothes for humans in the loop. Small runs, questionable AI jokes, and no real desire to become a fashion empire.
         </p>
         <a
-          className="mt-5 inline-flex items-center gap-2 bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700"
+          className="mt-5 inline-flex items-center gap-2 bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white"
           href={shopUrl}
           target="_blank"
           rel="noopener noreferrer"

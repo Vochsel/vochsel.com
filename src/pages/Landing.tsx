@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import ThemeToggle from '../components/ThemeToggle'
 import { archiveLinks, currentProjects, pastProjects, type CurrentProject, type PastProject } from '../data/siteLinks'
 
 const externalProps = (href: string) => href.startsWith('http')
@@ -43,35 +44,35 @@ function ProjectCard({ project, tint, wide = false }: { project: CurrentProject;
       href={project.href}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetParallax}
-      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
+      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl dark:border-white/10 sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
     >
       <img
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 transition-transform duration-500 group-hover:scale-[1.025]"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 transition-transform duration-500 group-hover:scale-[1.025] dark:opacity-30 dark:mix-blend-luminosity"
         src={project.image}
         alt={project.imageAlt}
         style={{ objectPosition: project.imagePosition }}
       />
-      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/55 via-white/5 to-white/20" />
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/55 via-white/5 to-white/20 dark:from-black/70 dark:via-black/10 dark:to-black/25" />
       <span
-        className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out"
+        className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out dark:bg-white/10"
         style={{ transform: 'translate3d(var(--glow-x, 0px), var(--glow-y, 0px), 0) scale(1.1)' }}
       />
-      <span className="pointer-events-none absolute inset-2 rounded-[1.55rem] border border-white/45 shadow-[inset_0_0_48px_rgba(255,255,255,0.28)]" />
+      <span className="pointer-events-none absolute inset-2 rounded-[1.55rem] border border-white/45 shadow-[inset_0_0_48px_rgba(255,255,255,0.28)] dark:border-white/10 dark:shadow-[inset_0_0_48px_rgba(255,255,255,0.04)]" />
       <span
         className="relative flex w-full flex-col justify-between transition-transform duration-150 ease-out"
         style={{ transform: 'translate3d(var(--content-x, 0px), var(--content-y, 0px), 0)' }}
       >
         <span className="flex items-start justify-between">
-          <span className="rounded-full border border-white/45 bg-white/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md">
+          <span className="rounded-full border border-white/45 bg-white/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md dark:border-white/10 dark:bg-black/25">
             {project.type}
           </span>
-          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/45 bg-white/45 backdrop-blur-md transition-colors group-hover:bg-white/75">
+          <span className="grid h-10 w-10 place-items-center rounded-full border border-white/45 bg-white/45 backdrop-blur-md transition-colors group-hover:bg-white/75 dark:border-white/10 dark:bg-black/25 dark:group-hover:bg-white/15">
             <Arrow />
           </span>
         </span>
         <span>
           <span className="block text-4xl font-medium tracking-[-0.06em] sm:text-5xl">{project.name}</span>
-          <span className="mt-3 block max-w-sm text-sm leading-6 text-black/50">{project.description}</span>
+          <span className="mt-3 block max-w-sm text-sm leading-6 text-black/50 dark:text-white/55">{project.description}</span>
         </span>
       </span>
     </a>
@@ -113,28 +114,31 @@ function GitHubIcon() {
 
 export default function Landing() {
   const cardColours = [
-    'bg-[#d7e2ff]/70',
-    'bg-[#ffd9ee]/70',
-    'bg-[#ddf1d5]/70',
-    'bg-[#ffe1bd]/70',
-    'bg-[#e6ddff]/70',
+    'bg-[#d7e2ff]/70 dark:bg-[#17233d]/85',
+    'bg-[#ffd9ee]/70 dark:bg-[#3a1d30]/85',
+    'bg-[#ddf1d5]/70 dark:bg-[#20301f]/85',
+    'bg-[#ffe1bd]/70 dark:bg-[#3a2a1a]/85',
+    'bg-[#e6ddff]/70 dark:bg-[#28213d]/85',
   ]
 
   return (
-    <div className="relative min-h-screen bg-[#f5f5f3] text-[#20201e] selection:bg-[#1f4eea] selection:text-white">
+    <div className="relative min-h-screen bg-[#f5f5f3] text-[#20201e] selection:bg-[#1f4eea] selection:text-white dark:bg-[#10110f] dark:text-[#f1f1ec]">
       <main className="relative z-10 mx-auto max-w-7xl px-5 py-6 sm:px-10 sm:py-10">
         <header className="flex items-center justify-between">
           <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
-          <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md">
-            <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
-            33.8997° S, 151.1710° E
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md dark:border-white/10 dark:bg-white/5">
+              <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
+              33.8997° S, 151.1710° E
+            </div>
+            <ThemeToggle subtle />
           </div>
         </header>
 
         <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
             <h1 className="text-sm font-semibold">Currently</h1>
-            <span className="text-xs text-black/35">Five places to start</span>
+            <span className="text-xs text-black/35 dark:text-white/35">Five places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {currentProjects.map((project, index) => (
@@ -148,25 +152,25 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl sm:mt-28 sm:p-8">
+        <section className="mt-20 rounded-[2rem] border border-white/65 bg-white/55 p-6 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:mt-28 sm:p-8">
           <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
             <div>
               <h2 className="text-sm font-semibold">Previously</h2>
-              <p className="mt-2 text-sm text-black/40">Things that taught me something.</p>
+              <p className="mt-2 text-sm text-black/40 dark:text-white/40">Things that taught me something.</p>
             </div>
             <div className="grid sm:grid-cols-2">
               {pastProjects.map(project => (
                 <div
                   key={project.name}
-                  className="flex min-w-0 items-center justify-between gap-4 border-b border-black/10 py-5 sm:odd:mr-8"
+                  className="flex min-w-0 items-center justify-between gap-4 border-b border-black/10 py-5 dark:border-white/10 sm:odd:mr-8"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-black/8 bg-white/60">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-black/8 bg-white/60 dark:border-white/10 dark:bg-white/5">
                       <ProjectIcon project={project} />
                     </span>
                     <span className="min-w-0">
                       <span className="block truncate font-medium">{project.name}</span>
-                      <span className="mt-1 block truncate text-xs text-black/40">{project.description}</span>
+                      <span className="mt-1 block truncate text-xs text-black/40 dark:text-white/40">{project.description}</span>
                     </span>
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
@@ -177,7 +181,7 @@ export default function Landing() {
                         rel="noopener noreferrer"
                         aria-label={`${project.name} on GitHub`}
                         title="GitHub"
-                        className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black"
+                        className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black dark:text-white/35 dark:hover:bg-white/10 dark:hover:text-white"
                       >
                         <GitHubIcon />
                       </a>
@@ -187,7 +191,7 @@ export default function Landing() {
                       {...externalProps(project.href)}
                       aria-label={`Open ${project.name}`}
                       title={`Open ${project.name}`}
-                      className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black"
+                      className="grid h-9 w-9 place-items-center rounded-full text-black/35 transition-colors hover:bg-white/70 hover:text-black dark:text-white/35 dark:hover:bg-white/10 dark:hover:text-white"
                     >
                       <Arrow />
                     </a>
@@ -198,11 +202,11 @@ export default function Landing() {
           </div>
         </section>
 
-        <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/45">
+        <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-8 text-xs text-black/45 dark:border-white/10 dark:text-white/45">
           <span>© 2026 Ben Skinner</span>
           <div className="flex gap-5">
             {archiveLinks.map(link => (
-              <a key={link.name} href={link.href} {...externalProps(link.href)} className="hover:text-black">
+              <a key={link.name} href={link.href} {...externalProps(link.href)} className="hover:text-black dark:hover:text-white">
                 {link.name}
               </a>
             ))}

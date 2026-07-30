@@ -37,7 +37,7 @@ export default function QuoteParagraph({ children, ...props }: HTMLAttributes<HT
       <p
         ref={ref}
         {...props}
-        className={highlighted ? 'bg-amber-50/80 border-l-2 border-amber-300 pl-4 -ml-4 rounded-r transition-colors duration-500' : undefined}
+        className={highlighted ? 'bg-amber-50/80 border-l-2 border-amber-300 pl-4 -ml-4 rounded-r transition-colors duration-500 dark:bg-amber-950/40 dark:border-amber-700' : undefined}
       >
         {children}
       </p>

@@ -283,7 +283,7 @@ export default function NewBlog() {
               className="w-full text-base border-b border-gray-300 py-2 mb-6 outline-none focus:border-gray-600 bg-transparent text-gray-600"
             />
 
-            <div className="prose prose-lg max-w-none mb-6 border border-gray-200 rounded-lg p-4">
+            <div className="prose prose-lg max-w-none mb-6 border border-gray-200 rounded-lg p-4 dark:prose-invert">
               <EditorContent editor={editor} />
             </div>
 

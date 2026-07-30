@@ -119,7 +119,7 @@ export default function ThreeDPrinting() {
         </h1>
       </header>
 
-      <div className="overflow-hidden rounded-xl bg-gray-950 shadow-sm ring-1 ring-gray-200">
+      <div className="overflow-hidden rounded-xl bg-gray-950 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
         <div className="aspect-video">
           <iframe
             className="h-full w-full"
