@@ -27,13 +27,21 @@ function escapeXml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
-function generateFeed(): string {
-  const blogDir = resolve(__dirname, 'src', 'content', 'blog')
-  const posts = readdirSync(blogDir)
+interface ContentPost {
+  slug: string
+  title: string
+  date: string
+  excerpt: string
+  visible: boolean
+}
+
+function readPosts(directory: string): ContentPost[] {
+  const contentDir = resolve(__dirname, 'src', 'content', directory)
+  return readdirSync(contentDir)
     .filter(f => f.endsWith('.mdx'))
     .map(f => {
       const slug = f.replace('.mdx', '')
-      const content = readFileSync(resolve(blogDir, f), 'utf-8')
+      const content = readFileSync(resolve(contentDir, f), 'utf-8')
       const meta = parseFrontmatter(content)
       return {
         slug,
@@ -43,6 +51,10 @@ function generateFeed(): string {
         visible: meta.visible !== 'false',
       }
     })
+}
+
+function generateFeed(): string {
+  const posts = readPosts('blog')
     .filter(p => p.visible)
     .filter(p => p.date <= new Date().toISOString().slice(0, 10))
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -86,6 +98,40 @@ function rssPlugin(): Plugin {
   }
 }
 
+function setHtmlTitle(template: string, title: string): string {
+  const escapedTitle = escapeXml(title)
+  return template
+    .replace(/<title>.*?<\/title>/, `<title>${escapedTitle}</title>`)
+    .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${escapedTitle}" />`)
+    .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${escapedTitle}" />`)
+}
+
+function blogMetaPlugin(): Plugin {
+  return {
+    name: 'blog-meta-pages',
+    closeBundle() {
+      const distDir = resolve(__dirname, 'dist')
+      const template = readFileSync(resolve(distDir, 'index.html'), 'utf-8')
+      const today = new Date().toISOString().slice(0, 10)
+
+      for (const directory of ['blog', 'claude-blog']) {
+        const outputDirectory = directory === 'claude-blog' ? 'claudes-blog' : directory
+        const outputPath = resolve(distDir, outputDirectory)
+        mkdirSync(outputPath, { recursive: true })
+
+        for (const post of readPosts(directory).filter(post => post.visible && post.date <= today)) {
+          writeFileSync(
+            resolve(outputPath, `${post.slug}.html`),
+            setHtmlTitle(template, post.title),
+          )
+        }
+      }
+
+      console.log('Generated blog metadata pages')
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     { enforce: 'pre', ...mdx({
@@ -94,6 +140,7 @@ export default defineConfig({
     }) },
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
     rssPlugin(),
+    blogMetaPlugin(),
   ],
   assetsInclude: ['**/*.md'],
 })

@@ -1,6 +1,8 @@
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect, type ComponentType } from 'react'
 import QuoteParagraph from '../components/QuoteParagraph'
+import { claudePosts } from '../content/claude-blog/posts'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00')
@@ -24,6 +26,9 @@ export default function ClaudeBlogPost() {
   const [Content, setContent] = useState<MDXContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const post = claudePosts.find(candidate => candidate.slug === slug)
+
+  usePageTitle(post?.title)
 
   useEffect(() => {
     async function loadContent() {
