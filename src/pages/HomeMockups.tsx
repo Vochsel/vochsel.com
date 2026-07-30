@@ -429,6 +429,7 @@ function ConceptFour() {
     'bg-[#ffd9ee]/70',
     'bg-[#ddf1d5]/70',
     'bg-[#ffe1bd]/70',
+    'bg-[#e6ddff]/70',
   ]
 
   return (

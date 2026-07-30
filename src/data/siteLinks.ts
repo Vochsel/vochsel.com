@@ -38,6 +38,12 @@ export const currentProjects: CurrentProject[] = [
     type: 'Objects',
     description: 'Upcoming interior objects and quieter smart-home interfaces.',
   },
+  {
+    name: '/clothing',
+    href: '/clothing',
+    type: 'Clothing',
+    description: 'Small runs and questionable AI jokes from Unprompted.',
+  },
 ]
 
 export const pastProjects: PastProject[] = [

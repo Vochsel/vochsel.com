@@ -14,6 +14,7 @@ import ThreeDPrinting from './pages/ThreeDPrinting'
 import Art from './pages/Art'
 import Music from './pages/Music'
 import Objects from './pages/Objects'
+import Clothing from './pages/Clothing'
 
 const HomeMockups = lazy(() => import('./pages/HomeMockups'))
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="art" element={<Art />} />
         <Route path="music" element={<Music />} />
         <Route path="objects" element={<Objects />} />
+        <Route path="clothing" element={<Clothing />} />
         <Route path="blog" element={<Home />} />
         <Route path="blog/3d-printing" element={<ThreeDPrinting />} />
         <Route path="blog/:slug" element={<BlogPost />} />

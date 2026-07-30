@@ -10,7 +10,7 @@ function Arrow() {
   return <span aria-hidden="true">↗</span>
 }
 
-function ProjectCard({ project, tint }: { project: CurrentProject; tint: string }) {
+function ProjectCard({ project, tint, wide = false }: { project: CurrentProject; tint: string; wide?: boolean }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLAnchorElement>) => {
@@ -43,7 +43,7 @@ function ProjectCard({ project, tint }: { project: CurrentProject; tint: string 
       href={project.href}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetParallax}
-      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl sm:p-8 ${tint}`}
+      className={`group relative isolate flex min-h-72 overflow-hidden rounded-[2rem] border border-white/65 p-6 backdrop-blur-xl sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
     >
       <span
         className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out"
@@ -110,6 +110,7 @@ export default function Landing() {
     'bg-[#ffd9ee]/70',
     'bg-[#ddf1d5]/70',
     'bg-[#ffe1bd]/70',
+    'bg-[#e6ddff]/70',
   ]
 
   return (
@@ -126,11 +127,16 @@ export default function Landing() {
         <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
             <h1 className="text-sm font-semibold">Current life</h1>
-            <span className="text-xs text-black/35">Four places to start</span>
+            <span className="text-xs text-black/35">Five places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {currentProjects.map((project, index) => (
-              <ProjectCard key={project.name} project={project} tint={cardColours[index]} />
+              <ProjectCard
+                key={project.name}
+                project={project}
+                tint={cardColours[index]}
+                wide={index === currentProjects.length - 1}
+              />
             ))}
           </div>
         </section>
