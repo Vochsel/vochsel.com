@@ -69,11 +69,11 @@ export default function Waitlist({
   const countryId = `${variant}-waitlist-country`
 
   return (
-    <aside className="not-prose my-10 border-y border-gray-200 py-7">
+    <aside className="not-prose my-10 w-full border-y border-gray-200 py-7">
       <p className="font-serif text-2xl text-gray-900">{content.heading}</p>
       <p className="mt-2 max-w-xl text-sm leading-6 text-gray-500">{content.description}</p>
 
-      <form className="mt-5 flex max-w-2xl flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
+      <form className="mt-5 flex w-full flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor={emailId}>Email address</label>
         <input
           id={emailId}
@@ -89,21 +89,33 @@ export default function Waitlist({
         />
 
         <label className="sr-only" htmlFor={countryId}>Country</label>
-        <select
-          id={countryId}
-          className="border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-gray-900 sm:w-48"
-          name="country"
-          autoComplete="country"
-          value={country}
-          onChange={event => setCountry(event.target.value)}
-          disabled={disabled}
-          required
-        >
-          <option value="" disabled>Country</option>
-          {countries.map(option => (
-            <option key={option.code} value={option.code}>{option.name}</option>
-          ))}
-        </select>
+        <div className="relative shrink-0 sm:w-48">
+          <select
+            id={countryId}
+            className="w-full appearance-none border border-gray-300 bg-white py-3 pl-4 pr-11 text-sm text-gray-900 outline-none transition focus:border-gray-900"
+            name="country"
+            autoComplete="country"
+            value={country}
+            onChange={event => setCountry(event.target.value)}
+            disabled={disabled}
+            required
+          >
+            <option value="" disabled>Country</option>
+            {countries.map(option => (
+              <option key={option.code} value={option.code}>{option.name}</option>
+            ))}
+          </select>
+          <svg
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="m3.5 5.25 3.5 3.5 3.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
 
         <button
           className="bg-gray-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400"
