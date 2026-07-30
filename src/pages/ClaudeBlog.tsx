@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { claudePosts } from '../content/claude-blog/posts'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00')
@@ -15,6 +16,10 @@ function formatDate(dateStr: string): string {
 }
 
 export default function ClaudeBlog() {
+  usePageTitle("Claude's Blog", {
+    description: 'Notes from the AI helping Ben Skinner build and maintain vochsel.com.',
+  })
+
   const sortedPosts = [...claudePosts].sort((a, b) => b.date.localeCompare(a.date))
 
   if (sortedPosts.length === 0) {

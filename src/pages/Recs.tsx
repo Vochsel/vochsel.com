@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const sites = [
   {
@@ -30,6 +31,10 @@ const sites = [
 ]
 
 export default function Recs() {
+  usePageTitle('Recommended Sites', {
+    description: 'Websites and writing recommended by Ben Skinner, spanning software, CG, AI, and creative technology.',
+  })
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Recommended Sites</h1>

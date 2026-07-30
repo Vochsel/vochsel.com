@@ -1,11 +1,18 @@
 import { type FormEvent, useState } from 'react'
-import { useMutation } from 'convex/react'
+import { ConvexProvider, ConvexReactClient, useMutation } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { countries } from '../data/countries'
 
 export type WaitlistVariant = 'art' | 'object' | 'music'
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
+
+type WaitlistProps = {
+  variant: WaitlistVariant
+  source?: string
+}
+
+const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)
 
 const copy: Record<WaitlistVariant, { heading: string; description: string; success: string }> = {
   art: {
@@ -25,13 +32,7 @@ const copy: Record<WaitlistVariant, { heading: string; description: string; succ
   },
 }
 
-export default function Waitlist({
-  variant,
-  source,
-}: {
-  variant: WaitlistVariant
-  source?: string
-}) {
+function WaitlistForm({ variant, source }: WaitlistProps) {
   const joinWaitlist = useMutation(api.waitlist.join)
   const [email, setEmail] = useState('')
   const [country, setCountry] = useState('')
@@ -136,5 +137,13 @@ export default function Waitlist({
         </p>
       )}
     </aside>
+  )
+}
+
+export default function Waitlist(props: WaitlistProps) {
+  return (
+    <ConvexProvider client={convex}>
+      <WaitlistForm {...props} />
+    </ConvexProvider>
   )
 }

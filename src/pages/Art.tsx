@@ -72,7 +72,9 @@ function InstagramIcon() {
 }
 
 export default function Art() {
-  usePageTitle('3D art')
+  usePageTitle('3D Art by Ben Skinner', {
+    description: '3D art and sculptural experiments by Ben Skinner, including framed pieces, abstract forms, and recent renders.',
+  })
   const carouselRef = useRef<HTMLDivElement>(null)
 
   function scrollCarousel(direction: -1 | 1) {

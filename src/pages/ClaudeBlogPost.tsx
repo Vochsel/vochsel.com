@@ -28,7 +28,12 @@ export default function ClaudeBlogPost() {
   const [error, setError] = useState<string | null>(null)
   const post = claudePosts.find(candidate => candidate.slug === slug)
 
-  usePageTitle(post?.title)
+  usePageTitle(post?.title, {
+    description: post?.excerpt,
+    type: 'article',
+    date: post?.date,
+    author: 'Claude',
+  })
 
   useEffect(() => {
     async function loadContent() {

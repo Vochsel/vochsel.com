@@ -16,7 +16,9 @@ function formatDate(dateStr: string): string {
 }
 
 export default function Home() {
-  usePageTitle('Blog')
+  usePageTitle('Blog by Ben Skinner', {
+    description: 'Writing by Ben Skinner about art, technology, 3D printing, creative work, and building things.',
+  })
 
   const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date))
 

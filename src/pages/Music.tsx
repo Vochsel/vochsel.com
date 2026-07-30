@@ -45,7 +45,9 @@ function formatDuration(durationMs: number) {
 }
 
 export default function Music() {
-  usePageTitle('Music')
+  usePageTitle('Music by Ben Skinner', {
+    description: 'Music by Ben Skinner, including Whale Tapes, Toronto Tapes, and Pretty Beach Tapes.',
+  })
 
   return (
     <article className="py-6 sm:py-12">

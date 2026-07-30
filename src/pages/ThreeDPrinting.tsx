@@ -106,7 +106,9 @@ const prints: PrintEntry[] = [
 ]
 
 export default function ThreeDPrinting() {
-  usePageTitle('3D printing')
+  usePageTitle('3D Printing Experiments by Ben Skinner', {
+    description: '3D printing experiments, timelapses, and workshop notes from Ben Skinner, made with a Bambu Lab P2S.',
+  })
 
   return (
     <article className="py-6 sm:py-12">

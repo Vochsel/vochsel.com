@@ -21,7 +21,9 @@ const objectStudies = [
 ]
 
 export default function Objects() {
-  usePageTitle('Objects')
+  usePageTitle('Smart Home Object Concepts by Ben Skinner', {
+    description: 'Smart-home objects and product concepts by Ben Skinner, exploring ambient displays, speakers, and everyday interfaces.',
+  })
 
   return (
     <article className="py-6 sm:py-12">

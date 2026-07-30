@@ -1,4 +1,14 @@
 {
+  "headers": [
+    {
+      "source": "/new-blog",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/mockups/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
   "redirects": [
     { "source": "/3d-printing", "destination": "/blog/3d-printing", "permanent": true }
   ],
@@ -7,8 +17,13 @@
     { "source": "/music", "destination": "/music.html" },
     { "source": "/objects", "destination": "/objects.html" },
     { "source": "/clothing", "destination": "/clothing.html" },
+    { "source": "/blog", "destination": "/blog.html" },
     { "source": "/blog/:slug", "destination": "/blog/:slug.html" },
+    { "source": "/wiki", "destination": "/wiki.html" },
+    { "source": "/wiki/:slug", "destination": "/wiki/:slug.html" },
+    { "source": "/claudes-blog", "destination": "/claudes-blog.html" },
     { "source": "/claudes-blog/:slug", "destination": "/claudes-blog/:slug.html" },
+    { "source": "/recs", "destination": "/recs.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

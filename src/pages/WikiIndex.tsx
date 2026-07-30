@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const wikiPages = [
   { slug: 'houdini', title: 'Houdini', description: 'HScript, Python, HDAs, LOPS, and more' },
@@ -10,6 +11,10 @@ const wikiPages = [
 ]
 
 export default function WikiIndex() {
+  usePageTitle('CG and Software Wiki', {
+    description: 'Technical notes and useful snippets for Houdini, USD, Blender, CMake, NVIDIA Omniverse, and Unreal Engine.',
+  })
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Wiki</h1>

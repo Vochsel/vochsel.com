@@ -28,7 +28,9 @@ const products = [
 ]
 
 export default function Clothing() {
-  usePageTitle('Clothing')
+  usePageTitle('Unprompted Clothing by Ben Skinner', {
+    description: 'Unprompted clothing by Ben Skinner: small-run clothes for humans in the loop.',
+  })
 
   return (
     <article className="py-6 sm:py-12">

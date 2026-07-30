@@ -135,9 +135,11 @@ export default function Landing() {
           </div>
         </header>
 
+        <h1 className="sr-only">Ben Skinner — 3D art, music, objects and writing</h1>
+
         <section className="pt-20 sm:pt-28">
           <div className="mb-5 flex items-end justify-between">
-            <h1 className="text-sm font-semibold">Currently</h1>
+            <h2 className="text-sm font-semibold">Currently</h2>
             <span className="text-xs text-black/35 dark:text-white/35">Five places to start</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2">

@@ -1,9 +1,19 @@
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect, ComponentType } from 'react'
 import TableOfContents from '../components/TableOfContents'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 // Import all wiki MDX files
 const wikiModules = import.meta.glob('../content/wiki/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>
+
+const wikiMeta: Record<string, { title: string; description: string }> = {
+  houdini: { title: 'Houdini Wiki', description: 'Useful Houdini HScript, Python, VEX, HDAs, Solaris, and LOPs snippets.' },
+  usd: { title: 'Pixar USD Wiki', description: 'Practical Pixar Universal Scene Description notes and C++ and Python snippets for CG pipelines.' },
+  blender: { title: 'Blender Wiki', description: 'Blender C++ development snippets and technical reference notes.' },
+  cmake: { title: 'CMake Reference', description: 'Practical CMake refreshers covering paths, packages, targets, and common build tasks.' },
+  omniverse: { title: 'NVIDIA Omniverse Wiki', description: 'NVIDIA Omniverse development notes, gotchas, extensions, and Python snippets.' },
+  ue4: { title: 'Unreal Engine Wiki', description: 'Useful Unreal Engine 4 and UE5 console commands, Python calls, and development notes.' },
+}
 
 export default function WikiArticle() {
   const { slug } = useParams()
@@ -11,6 +21,9 @@ export default function WikiArticle() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [ready, setReady] = useState(false)
+  const pageMeta = slug ? wikiMeta[slug] : undefined
+
+  usePageTitle(pageMeta?.title, { description: pageMeta?.description })
 
   useEffect(() => {
     async function loadContent() {
