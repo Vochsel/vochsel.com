@@ -29,28 +29,30 @@ export default function Home() {
           <p className="mt-4 text-gray-500">Writing, plus a running log of things coming off the printer.</p>
         </header>
 
-        <nav className="mt-8 grid gap-3 sm:grid-cols-2" aria-label="Blog sections">
-          <a
-            href="#writing"
-            className="group flex min-h-32 flex-col justify-between rounded-sm border border-gray-200 p-5 transition hover:border-gray-400"
-          >
-            <span className="text-xs uppercase tracking-wider text-gray-400">Thoughts</span>
-            <span className="flex items-end justify-between text-2xl font-medium">
-              Writing
-              <span className="text-base text-gray-400" aria-hidden="true">↓</span>
-            </span>
-          </a>
-          <Link
-            to="/blog/3d-printing"
-            className="group flex min-h-32 flex-col justify-between rounded-sm border border-gray-200 p-5 transition hover:border-gray-400"
-          >
+        <Link
+          to="/blog/3d-printing"
+          className="group mt-8 grid overflow-hidden rounded-sm border border-gray-200 transition hover:border-gray-400 sm:grid-cols-[13rem_1fr]"
+        >
+          <img
+            className="aspect-video h-full w-full object-cover sm:aspect-auto"
+            src="/prints/zenith-twist-vase-front.jpg"
+            alt="Metallic 3D-printed Zenith twist vase"
+            width="1400"
+            height="1935"
+          />
+          <span className="flex min-h-40 flex-col justify-between p-5">
             <span className="text-xs uppercase tracking-wider text-gray-400">From the workshop</span>
-            <span className="flex items-end justify-between text-2xl font-medium">
-              3D printing
-              <span className="text-base text-gray-400 transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            <span>
+              <span className="flex items-end justify-between text-2xl font-medium">
+                3D printing
+                <span className="text-base text-gray-400 transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+              </span>
+              <span className="mt-2 block text-sm leading-6 text-gray-500">
+                Prints, timelapses, and experiments with a Bambu Lab P2S.
+              </span>
             </span>
-          </Link>
-        </nav>
+          </span>
+        </Link>
 
         <section className="mt-14" id="writing">
           <h2 className="mb-8 text-xs font-medium uppercase tracking-wider text-gray-400">Writing</h2>
