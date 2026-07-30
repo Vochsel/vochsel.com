@@ -127,7 +127,7 @@ export default function Landing() {
           <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
           <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md">
             <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
-            Making things in Sydney
+            33.8997° S, 151.1710° E
           </div>
         </header>
 
