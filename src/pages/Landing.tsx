@@ -171,17 +171,16 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="mt-16 rounded-[2rem] border border-white/65 bg-white/55 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:mt-28 sm:p-8">
-          <div className="grid gap-10 lg:grid-cols-[.6fr_1.4fr]">
-            <div>
-              <h2 className="text-sm font-semibold">Previously</h2>
-              <p className="mt-2 text-sm text-black/40 dark:text-white/40">Things that taught me something.</p>
-            </div>
-            <div className="grid sm:grid-cols-2">
+        <section className="mt-16 sm:mt-28">
+          <div className="mb-5">
+            <h2 className="text-sm font-semibold">Previously</h2>
+          </div>
+          <div className="rounded-[2rem] border border-white/65 bg-white/55 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 sm:p-8">
+            <div className="grid sm:grid-cols-2 sm:gap-x-8">
               {pastProjects.map(project => (
                 <div
                   key={project.name}
-                  className="flex min-w-0 items-center justify-between gap-4 border-b border-black/10 py-5 dark:border-white/10 sm:odd:mr-8"
+                  className="flex min-w-0 items-center justify-between gap-4 border-b border-black/10 py-5 dark:border-white/10"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-black/8 bg-white/60 dark:border-white/10 dark:bg-white/5">
