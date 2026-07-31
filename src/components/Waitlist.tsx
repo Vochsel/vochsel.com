@@ -124,11 +124,11 @@ function WaitlistForm({ variant, source }: WaitlistProps) {
       <p className="font-serif text-2xl text-gray-900">{content.heading}</p>
       <p className="mt-2 max-w-xl text-sm leading-6 text-gray-500">{content.description}</p>
 
-      <form className="mt-5 flex w-full flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
+      <form className="mt-5 grid w-full gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]" onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor={emailId}>Email address</label>
         <input
           id={emailId}
-          className="min-w-0 flex-1 border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-gray-400"
+          className="w-full min-w-0 border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-gray-400"
           type="email"
           name="email"
           autoComplete="email"
@@ -140,7 +140,7 @@ function WaitlistForm({ variant, source }: WaitlistProps) {
         />
 
         <label className="sr-only" htmlFor={countryId}>Country</label>
-        <div className="relative shrink-0 sm:w-48">
+        <div className="relative min-w-0">
           <select
             id={countryId}
             className="w-full appearance-none border border-gray-300 bg-white py-3 pl-4 pr-11 text-sm text-gray-900 outline-none transition focus:border-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-gray-400"
