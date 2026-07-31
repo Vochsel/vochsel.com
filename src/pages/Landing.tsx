@@ -78,10 +78,7 @@ function ProjectCard({
         className="relative flex w-full flex-col justify-between transition-transform duration-150 ease-out"
         style={{ transform: 'translate3d(var(--content-x, 0px), var(--content-y, 0px), 0)' }}
       >
-        <span className="flex items-start justify-between">
-          <span className="rounded-full border border-white/45 bg-white/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md dark:border-white/10 dark:bg-black/25">
-            {project.type}
-          </span>
+        <span className="flex items-start justify-end">
           <span className="grid h-10 w-10 place-items-center rounded-full border border-white/45 bg-white/45 backdrop-blur-md transition-colors group-hover:bg-white/75 dark:border-white/10 dark:bg-black/25 dark:group-hover:bg-white/15">
             <Arrow />
           </span>
