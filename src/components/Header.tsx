@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const { pathname } = useLocation()
+  const category = pathname.split('/').filter(Boolean)[0]
+  const categoryHref = category ? `/${category}` : '/'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0)
@@ -14,9 +17,19 @@ export default function Header() {
   return (
     <header className={`sticky top-0 z-50 border-gray-200 bg-white/80 backdrop-blur-sm transition-colors dark:border-gray-800 dark:bg-gray-950/80 ${scrolled ? 'border-b' : ''}`}>
       <nav className="container mx-auto px-4 py-4 max-w-4xl flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold font-serif">
-          vochsel
-        </Link>
+        <div className="flex min-w-0 items-baseline gap-2">
+          <Link to="/" className="font-serif text-xl font-bold">
+            vochsel
+          </Link>
+          {category && (
+            <Link
+              to={categoryHref}
+              className="truncate text-sm font-medium text-gray-400 transition-colors hover:text-gray-700"
+            >
+              /{category}
+            </Link>
+          )}
+        </div>
         <div className="flex items-center gap-1">
           <a href="/feed.xml" className="p-1.5 text-gray-400 hover:text-gray-900 rounded-md hover:bg-gray-100 transition-colors" title="RSS Feed">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

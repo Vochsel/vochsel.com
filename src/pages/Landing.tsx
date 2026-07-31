@@ -141,7 +141,7 @@ export default function Landing() {
     <div className="relative min-h-screen bg-[#f5f5f3] text-[#20201e] selection:bg-[#1f4eea] selection:text-white dark:bg-[#10110f] dark:text-[#f1f1ec]">
       <main className="relative z-10 mx-auto max-w-7xl px-4 py-5 sm:px-10 sm:py-10">
         <header className="flex items-center justify-between">
-          <span className="text-lg font-semibold tracking-[-0.04em]">vochsel</span>
+          <span className="font-serif text-xl font-bold">vochsel</span>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md dark:border-white/10 dark:bg-white/5">
               <span className="h-2 w-2 rounded-full bg-[#4eb869]" />

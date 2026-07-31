@@ -28,7 +28,6 @@ export default function Objects() {
   return (
     <article className="pb-6 sm:pb-12">
       <header className="max-w-2xl">
-        <p className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-400">/objects</p>
         <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">Objects for the home</h1>
         <p className="mt-5 text-lg leading-8 text-gray-600">
           I'm working on a small collection of beautifully designed smart-home pieces. Useful, connected objects that feel like part of the room rather than another gadget asking for attention.

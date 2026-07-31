@@ -26,7 +26,6 @@ export default function Home() {
     <div className="flex min-h-[calc(100vh-8rem)] flex-col">
       <div className="flex-1">
         <header>
-          <p className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-400">/blog</p>
           <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">Blog</h1>
           <p className="mt-4 text-gray-500">Writing, plus a running log of things coming off the printer.</p>
         </header>

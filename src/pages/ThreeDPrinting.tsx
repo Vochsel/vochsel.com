@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 const livestreamUrl = 'https://youtube.com/live/STqi7rXRCFc?feature=share'
@@ -113,9 +112,6 @@ export default function ThreeDPrinting() {
   return (
     <article className="pb-6 sm:pb-12">
       <header className="mb-8">
-        <p className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-400">
-          <Link to="/blog" className="hover:text-gray-700">/blog</Link> / 3D printing
-        </p>
         <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">
           3D printing
         </h1>
