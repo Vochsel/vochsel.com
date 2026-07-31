@@ -30,8 +30,8 @@ export const currentProjects: CurrentProject[] = [
     href: '/music',
     type: 'Sound',
     description: 'Electronic sketches, loops, and unfinished feelings.',
-    image: '/music/whale-tapes.webp',
-    imageAlt: 'Whale Tapes album artwork over the ocean at sunset',
+    image: '/music/whale-tapes-vinyl.webp',
+    imageAlt: 'Whale Tapes record sleeve and clear vinyl on a timber floor',
   },
   {
     name: '/blog',
