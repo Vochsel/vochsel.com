@@ -6,7 +6,41 @@ body {
   @apply bg-white text-gray-900 transition-colors duration-200 dark:bg-gray-950 dark:text-gray-100;
 }
 
+@keyframes nav-category-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes nav-category-slide {
+  from {
+    transform: translateX(-0.75rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @layer components {
+  .nav-category-mask {
+    animation: nav-category-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    overflow: hidden;
+  }
+
+  .nav-category-text {
+    animation: nav-category-slide 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-category-mask,
+    .nav-category-text {
+      animation: none;
+    }
+  }
+
   .home-project-card {
     border-radius: 2rem;
     clip-path: inset(0 round 2rem);

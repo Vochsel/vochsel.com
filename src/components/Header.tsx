@@ -23,11 +23,14 @@ export default function Header() {
           </Link>
           {category && (
             <Link
+              key={category}
               to={categoryHref}
-              className="inline-flex min-w-0 items-baseline gap-1.5 font-serif text-xl font-bold text-gray-400 transition-colors hover:text-gray-700"
+              className="inline-flex min-w-0 items-baseline font-serif text-xl font-bold text-gray-400 transition-colors hover:text-gray-700"
             >
               <span aria-hidden="true">/</span>
-              <span className="truncate">{category}</span>
+              <span className="nav-category-mask min-w-0 pl-1.5">
+                <span className="nav-category-text block truncate">{category}</span>
+              </span>
             </Link>
           )}
         </div>
