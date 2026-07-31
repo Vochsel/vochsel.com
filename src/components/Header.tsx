@@ -24,7 +24,7 @@ export default function Header() {
           {category && (
             <Link
               to={categoryHref}
-              className="truncate text-sm font-medium text-gray-400 transition-colors hover:text-gray-700"
+              className="truncate font-serif text-xl font-bold text-gray-400 transition-colors hover:text-gray-700"
             >
               /{category}
             </Link>
