@@ -62,18 +62,18 @@ function ProjectCard({
       className={`home-project-card group relative isolate flex min-h-64 min-w-0 overflow-hidden border border-white/65 p-5 backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-black/40 dark:border-white/10 dark:focus-visible:ring-white/40 sm:min-h-72 sm:p-8 ${wide ? 'md:col-span-2' : ''} ${tint}`}
     >
       <img
-        className="home-project-image pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-multiply saturate-75 dark:opacity-30 dark:mix-blend-luminosity"
+        className="home-project-image pointer-events-none absolute inset-0 h-full w-full object-cover opacity-70 mix-blend-multiply saturate-125 contrast-105 dark:opacity-55 dark:mix-blend-normal dark:saturate-110"
         src={project.image}
         alt={project.imageAlt}
         style={{ objectPosition: project.imagePosition }}
         loading={eager ? 'eager' : 'lazy'}
       />
-      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/55 via-white/5 to-white/20 dark:from-black/70 dark:via-black/10 dark:to-black/25" />
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 via-white/0 to-white/5 dark:from-black/60 dark:via-black/5 dark:to-black/10" />
       <span
-        className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/60 blur-3xl transition-transform duration-150 ease-out dark:bg-white/10"
+        className="pointer-events-none absolute -left-14 -top-20 h-64 w-64 rounded-full bg-white/35 blur-3xl transition-transform duration-150 ease-out dark:bg-white/5"
         style={{ transform: 'translate3d(var(--glow-x, 0px), var(--glow-y, 0px), 0) scale(1.1)' }}
       />
-      <span className="pointer-events-none absolute inset-2 rounded-[1.55rem] border border-white/45 shadow-[inset_0_0_48px_rgba(255,255,255,0.28)] dark:border-white/10 dark:shadow-[inset_0_0_48px_rgba(255,255,255,0.04)]" />
+      <span className="pointer-events-none absolute inset-2 rounded-[1.55rem] border border-white/45 shadow-[inset_0_0_48px_rgba(255,255,255,0.16)] dark:border-white/10 dark:shadow-[inset_0_0_48px_rgba(255,255,255,0.04)]" />
       <span
         className="relative flex w-full flex-col justify-between transition-transform duration-150 ease-out"
         style={{ transform: 'translate3d(var(--content-x, 0px), var(--content-y, 0px), 0)' }}
