@@ -17,12 +17,19 @@ body {
   }
 
   .home-project-image {
-    transition: transform 500ms;
+    transition: transform 500ms, filter 350ms, opacity 350ms;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .home-project-card:hover .home-project-image {
+      filter: brightness(1.12) saturate(1.35) contrast(1.06);
+      opacity: 0.9;
       transform: scale(1.025);
+    }
+
+    .dark .home-project-card:hover .home-project-image {
+      filter: brightness(1.16) saturate(1.25) contrast(1.04);
+      opacity: 0.72;
     }
   }
 
