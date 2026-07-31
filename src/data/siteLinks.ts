@@ -22,8 +22,8 @@ export const currentProjects: CurrentProject[] = [
     href: '/art',
     type: 'Visual',
     description: 'Experiments in form, light, and procedural worlds.',
-    image: '/art/folded-white-sculpture.webp',
-    imageAlt: 'Folded white sculptural render',
+    image: '/art/glitched-tree-wide.webp',
+    imageAlt: 'Tree split between a natural form and horizontal digital streaks',
   },
   {
     name: '/music',
