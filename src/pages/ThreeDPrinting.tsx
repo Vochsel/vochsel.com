@@ -111,7 +111,7 @@ export default function ThreeDPrinting() {
   })
 
   return (
-    <article className="py-6 sm:py-12">
+    <article className="pb-6 sm:pb-12">
       <header className="mb-8">
         <p className="mb-3 text-xs font-medium uppercase tracking-wider text-gray-400">
           <Link to="/blog" className="hover:text-gray-700">/blog</Link> / 3D printing

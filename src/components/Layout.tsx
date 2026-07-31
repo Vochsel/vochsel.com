@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <div className="site-shell min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+      <main className="flex-1 container mx-auto max-w-4xl px-4 py-5">
         <Outlet />
       </main>
     </div>
