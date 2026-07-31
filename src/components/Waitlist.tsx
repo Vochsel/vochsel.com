@@ -12,6 +12,43 @@ type WaitlistProps = {
   source?: string
 }
 
+type SavedWaitlistProfile = {
+  email: string
+  country: string
+  interests: WaitlistVariant[]
+}
+
+const storageKey = 'vochsel-waitlist-profile'
+const waitlistVariants: WaitlistVariant[] = ['art', 'object', 'music']
+
+function loadSavedProfile(): SavedWaitlistProfile | null {
+  try {
+    const value = localStorage.getItem(storageKey)
+    if (!value) return null
+
+    const parsed = JSON.parse(value) as Partial<SavedWaitlistProfile>
+    if (typeof parsed.email !== 'string' || typeof parsed.country !== 'string') return null
+
+    return {
+      email: parsed.email,
+      country: parsed.country,
+      interests: Array.isArray(parsed.interests)
+        ? parsed.interests.filter((interest): interest is WaitlistVariant => waitlistVariants.includes(interest as WaitlistVariant))
+        : [],
+    }
+  } catch {
+    return null
+  }
+}
+
+function saveProfile(profile: SavedWaitlistProfile) {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(profile))
+  } catch {
+    // The signup still succeeds when browser storage is unavailable.
+  }
+}
+
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)
 
 const copy: Record<WaitlistVariant, { heading: string; description: string; success: string }> = {
@@ -27,18 +64,20 @@ const copy: Record<WaitlistVariant, { heading: string; description: string; succ
   },
   music: {
     heading: 'Want to hear the next thing?',
-    description: "Leave your details and I'll let you know when I release something new.",
+    description: "Leave your details and I'll let you know about new music, vinyl, and physical releases.",
     success: "You're on the list. I'll let you know when something new is out.",
   },
 }
 
 function WaitlistForm({ variant, source }: WaitlistProps) {
   const joinWaitlist = useMutation(api.waitlist.join)
-  const [email, setEmail] = useState('')
-  const [country, setCountry] = useState('')
-  const [formState, setFormState] = useState<FormState>('idle')
-  const [message, setMessage] = useState('')
+  const [profile, setProfile] = useState<SavedWaitlistProfile | null>(loadSavedProfile)
+  const [email, setEmail] = useState(profile?.email ?? '')
+  const [country, setCountry] = useState(profile?.country ?? '')
+  const [formState, setFormState] = useState<FormState>(profile?.interests.includes(variant) ? 'success' : 'idle')
+  const [message, setMessage] = useState(profile?.interests.includes(variant) ? "You're already on this list." : '')
   const content = copy[variant]
+  const addingAnotherInterest = Boolean(profile?.interests.length && !profile.interests.includes(variant))
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -53,12 +92,23 @@ function WaitlistForm({ variant, source }: WaitlistProps) {
         source: source ?? window.location.pathname,
       })
 
+      const normalizedEmail = email.trim().toLowerCase()
+      const normalizedCountry = country.trim().toUpperCase()
+      const previousInterests = profile?.email === normalizedEmail ? profile.interests : []
+      const nextProfile: SavedWaitlistProfile = {
+        email: normalizedEmail,
+        country: normalizedCountry,
+        interests: [...new Set([...previousInterests, variant])],
+      }
+
+      saveProfile(nextProfile)
+      setProfile(nextProfile)
+      setEmail(normalizedEmail)
+      setCountry(normalizedCountry)
       setFormState('success')
       setMessage(result.status === 'already_joined'
         ? "You're already on this list."
         : content.success)
-      setEmail('')
-      setCountry('')
     } catch {
       setFormState('error')
       setMessage('Something went wrong. Check your details and try again.')
@@ -123,7 +173,13 @@ function WaitlistForm({ variant, source }: WaitlistProps) {
           type="submit"
           disabled={disabled}
         >
-          {formState === 'submitting' ? 'Joining…' : formState === 'success' ? 'Joined' : 'Keep me posted'}
+          {formState === 'submitting'
+            ? 'Joining…'
+            : formState === 'success'
+              ? 'Joined'
+              : addingAnotherInterest
+                ? 'Add this too'
+                : 'Keep me posted'}
         </button>
       </form>
 
