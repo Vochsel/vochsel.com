@@ -1,6 +1,13 @@
 {
   "headers": [
     {
+      "source": "/admin",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store" }
+      ]
+    },
+    {
       "source": "/new-blog",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },

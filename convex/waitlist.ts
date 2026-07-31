@@ -1,5 +1,27 @@
 import { ConvexError, v } from 'convex/values'
-import { mutation } from './_generated/server'
+import { mutation, query } from './_generated/server'
+
+export const list = query({
+  args: {
+    password: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const adminPassword = process.env.ADMIN_PASSWORD
+    if (!adminPassword || args.password !== adminPassword) {
+      throw new ConvexError('Unauthorized')
+    }
+
+    const signups = await ctx.db.query('artWaitlist').order('desc').collect()
+    return signups.map(signup => ({
+      id: signup._id,
+      email: signup.email,
+      country: signup.country,
+      variant: signup.variant,
+      source: signup.source,
+      createdAt: signup.createdAt,
+    }))
+  },
+})
 
 export const join = mutation({
   args: {

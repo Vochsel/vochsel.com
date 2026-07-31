@@ -15,6 +15,7 @@ const Art = lazy(() => import('./pages/Art'))
 const Music = lazy(() => import('./pages/Music'))
 const Objects = lazy(() => import('./pages/Objects'))
 const Clothing = lazy(() => import('./pages/Clothing'))
+const Admin = lazy(() => import('./pages/Admin'))
 const HomeMockups = lazy(() => import('./pages/HomeMockups'))
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="claudes-blog" element={<ClaudeBlog />} />
           <Route path="claudes-blog/:slug" element={<ClaudeBlogPost />} />
           <Route path="recs" element={<Recs />} />
+          <Route path="admin" element={<Admin />} />
           <Route path="3d-printing" element={<Navigate to="/blog/3d-printing" replace />} />
         </Route>
       </Routes>
