@@ -140,10 +140,9 @@ export default function Landing() {
         <header className="flex items-center justify-between">
           <span className="font-serif text-xl font-bold">vochsel</span>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 rounded-full border border-white/70 bg-white/55 px-3 py-2 text-[11px] backdrop-blur-md dark:border-white/10 dark:bg-white/5">
-              <span className="h-2 w-2 rounded-full bg-[#4eb869]" />
-              <span className="sm:hidden">Sydney</span>
-              <span className="hidden sm:inline">33.8997° S, 151.1710° E</span>
+            <div className="flex items-center gap-1.5 rounded-full border border-white/70 bg-white/55 px-2.5 py-2 text-[10px] backdrop-blur-md dark:border-white/10 dark:bg-white/5 sm:gap-2 sm:px-3 sm:text-[11px]">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-[#4eb869]" />
+              <span className="whitespace-nowrap">33.8997° S, 151.1710° E</span>
             </div>
             <ThemeToggle subtle />
           </div>
