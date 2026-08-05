@@ -36,12 +36,6 @@ const recentRenders = [
     height: 2048,
   },
   {
-    src: '/art/folded-blue-sculpture.webp',
-    alt: 'Blue folded sculptural form on a green background',
-    width: 512,
-    height: 512,
-  },
-  {
     src: '/art/glitched-tree.webp',
     alt: 'Tree distorted into horizontal digital streaks',
     width: 1842,
