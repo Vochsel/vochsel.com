@@ -41,18 +41,6 @@ const prints: PrintEntry[] = [
     },
   },
   {
-    name: 'Shallow dish',
-    description: 'A wide, shallow dish with a rolled rim, printed as a companion to the round bowl.',
-    status: 'Printed',
-    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-    date: '23 August 2026',
-    dateTime: '2026-08-23',
-    video: {
-      src: '/prints/shallow-dish.mp4',
-      label: 'Wide gold shallow dish printing at five times speed',
-    },
-  },
-  {
     name: 'Magazine file',
     description: 'An open-fronted desk file with tall sides and a curved scoop at the front.',
     status: 'Printed',
