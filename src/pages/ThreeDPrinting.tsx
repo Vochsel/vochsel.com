@@ -29,6 +29,102 @@ type PrintEntry = {
 
 const prints: PrintEntry[] = [
   {
+    name: 'Round bowl',
+    description: 'A deep bowl with a curved profile that turns back inwards at the rim.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '23 August 2026',
+    dateTime: '2026-08-23',
+    video: {
+      src: '/prints/round-bowl.mp4',
+      label: 'Gold round bowl printing at five times speed',
+    },
+  },
+  {
+    name: 'Shallow dish',
+    description: 'A wide, shallow dish with a rolled rim, printed as a companion to the round bowl.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '23 August 2026',
+    dateTime: '2026-08-23',
+    video: {
+      src: '/prints/shallow-dish.mp4',
+      label: 'Wide gold shallow dish printing at five times speed',
+    },
+  },
+  {
+    name: 'Magazine file',
+    description: 'An open-fronted desk file with tall sides and a curved scoop at the front.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '22 August 2026',
+    dateTime: '2026-08-22',
+    video: {
+      src: '/prints/magazine-file.mp4',
+      label: 'White magazine file printing at five times speed',
+    },
+  },
+  {
+    name: 'Pinned mounting block',
+    description: 'A small block with a circular hub and an upright pin.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '21 August 2026',
+    dateTime: '2026-08-21',
+    video: {
+      src: '/prints/pinned-mounting-block.mp4',
+      label: 'Small dark grey mounting block printing at five times speed',
+    },
+  },
+  {
+    name: 'Ribbed containers',
+    description: 'A pair of ribbed, straight-sided containers printed together on tree supports.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '19 August 2026',
+    dateTime: '2026-08-19',
+    video: {
+      src: '/prints/ribbed-containers.mp4',
+      label: 'Two dark grey ribbed containers printing on tree supports at five times speed',
+    },
+  },
+  {
+    name: 'Lattice pot',
+    description: 'A cylindrical pot with a solid base that rises into an open diamond lattice.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '19 August 2026',
+    dateTime: '2026-08-19',
+    video: {
+      src: '/prints/lattice-pot.mp4',
+      label: 'Gold lattice pot printing at five times speed',
+    },
+  },
+  {
+    name: 'Angled bracket',
+    description: 'A flat, angular bracket with rounded ends, a raised boss, and a short peg.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '27 July 2026',
+    dateTime: '2026-07-27',
+    video: {
+      src: '/prints/angled-bracket.mp4',
+      label: 'White angled bracket printing at five times speed',
+    },
+  },
+  {
+    name: 'Stepped rack',
+    description: 'A long stepped part combining a grid of raised pins, notched steps, and thin upright walls.',
+    status: 'Printed',
+    statusClassName: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    date: '27 July 2026',
+    dateTime: '2026-07-27',
+    video: {
+      src: '/prints/stepped-rack.mp4',
+      label: 'White stepped rack printing at five times speed',
+    },
+  },
+  {
     name: 'Zenith twist vase',
     description: 'A tall, three-lobed vase with a continuous spiral.',
     status: 'Printed',
