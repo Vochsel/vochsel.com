@@ -64,8 +64,12 @@ def main() -> None:
     parser.add_argument('--output-dir', type=Path, default=Path('public/prints'))
     parser.add_argument('--url-prefix', default='/prints')
     parser.add_argument(
-        '--max-duration', type=float, default=10.0,
-        help='cap the timelapse at this many seconds by speeding it up (0 disables)',
+        '--max-duration', type=float, default=12.0,
+        help='cap the finished timelapse at this many seconds by speeding it up (0 disables)',
+    )
+    parser.add_argument(
+        '--no-bounce', dest='bounce', action='store_false',
+        help='write a one-way timelapse instead of a forward-then-reverse bounce loop',
     )
     args = parser.parse_args()
 
@@ -122,16 +126,27 @@ def main() -> None:
         if args.video and video_output:
             scale = "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2"
             source_duration = float(probe_float(args.video, 'format=duration'))
+            # A bounce plays forward then backward, so each pass gets half the budget.
+            forward_budget = args.max_duration / 2 if args.bounce else args.max_duration
             speedup = 1.0
-            if args.max_duration > 0 and source_duration > args.max_duration:
-                speedup = source_duration / args.max_duration
-            filters = [scale]
+            if forward_budget > 0 and source_duration > forward_budget:
+                speedup = source_duration / forward_budget
+            chain = [scale]
             if speedup > 1.0:
-                filters.append(f'setpts=PTS/{speedup:.6f}')
-                filters.append(f'fps={source_fps(args.video):.6f}')
+                chain.append(f'setpts=PTS/{speedup:.6f}')
+                chain.append(f'fps={source_fps(args.video):.6f}')
+            if args.bounce:
+                # Drop the reversed pass's first frame so the turnaround does not stutter.
+                graph = (
+                    f"[0:v]{','.join(chain)},split[fwd][pre];"
+                    '[pre]reverse,trim=start_frame=1,setpts=PTS-STARTPTS[rev];'
+                    '[fwd][rev]concat=n=2:v=1:a=0[out]'
+                )
+            else:
+                graph = f"[0:v]{','.join(chain)}[out]"
             run([
-                'ffmpeg', '-y', '-i', str(args.video), '-map', '0:v:0', '-an',
-                '-vf', ','.join(filters),
+                'ffmpeg', '-y', '-i', str(args.video), '-an',
+                '-filter_complex', graph, '-map', '[out]',
                 '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-pix_fmt', 'yuv420p',
                 '-movflags', '+faststart', str(video_output),
             ])
@@ -144,6 +159,7 @@ def main() -> None:
                 'duration': round(float(probe_float(video_output, 'format=duration')), 2),
                 'sourceDuration': round(source_duration, 2),
                 'speedup': round(speedup, 2),
+                'bounce': args.bounce,
             }
     except (subprocess.CalledProcessError, ValueError) as error:
         for path in created:

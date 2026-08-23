@@ -48,7 +48,7 @@ Omit unused flags. The script:
 
 - auto-orients images, strips private metadata, limits them to 2000 px, and writes web-ready JPEGs;
 - converts one optional video to muted H.264 MP4 with `faststart` and a maximum 1920×1080 bounding box;
-- caps that video at roughly 10 seconds, speeding it up as needed (see below);
+- makes that video a forward-then-reverse bounce loop capped at roughly 12 seconds (see below);
 - refuses to overwrite existing files;
 - prints JSON containing final web paths, image dimensions, and the video's duration and speed-up factor.
 
@@ -56,9 +56,16 @@ It requires ImageMagick (`magick` and `identify`) for photos and FFmpeg (`ffmpeg
 
 For multiple photos, the script creates numbered names. Rename them to meaningful suffixes such as `-front` and `-back` when the views are obvious, and keep the entry paths in sync.
 
-### Timelapse length
+### Timelapse length and bounce
 
-Every timelapse on the page should run about 10 seconds. The script enforces this by default: anything longer is sped up with `setpts` to land on 10 seconds, and anything already shorter is left at its own length rather than being stretched out. Pass `--max-duration <seconds>` to use a different target, or `--max-duration 0` to keep the source length.
+Every timelapse on the page plays as a bounce loop: the print builds up, then runs backwards, then repeats. The page already sets `loop` on the `<video>`, so the file itself only needs to hold one out-and-back cycle.
+
+The script does this by default and caps the finished clip at roughly 12 seconds. Because a bounce plays each way once, the forward pass gets half the budget—6 seconds—and anything longer is sped up with `setpts` to fit. Sources already shorter than 6 seconds keep their own speed and simply bounce out to double their length rather than being stretched.
+
+- `--max-duration <seconds>` sets a different total; `--max-duration 0` keeps the source length.
+- `--no-bounce` writes a plain one-way timelapse.
+
+The finished clip is a frame shy of the target because the reversed pass drops its first frame, which would otherwise repeat the apex and stutter at the turnaround.
 
 Because the speed-up factor varies per print, do not state a multiplier in the video `label`. Describe the subject and end with `, timelapse`—for example `Gold lattice pen holder printing, timelapse`.
 
