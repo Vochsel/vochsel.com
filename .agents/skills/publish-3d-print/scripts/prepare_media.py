@@ -40,6 +40,22 @@ def dimensions(path: Path, command: str) -> tuple[int, int]:
     return int(width), int(height)
 
 
+def probe_float(path: Path, entries: str) -> str:
+    return run([
+        'ffprobe', '-v', 'error', '-select_streams', 'v:0',
+        '-show_entries', entries, '-of', 'default=nokey=1:noprint_wrappers=1', str(path),
+    ]).splitlines()[0].strip()
+
+
+def source_fps(path: Path) -> float:
+    rate = probe_float(path, 'stream=r_frame_rate')
+    numerator, _, denominator = rate.partition('/')
+    denominator_value = float(denominator) if denominator else 1.0
+    if denominator_value == 0:
+        return 30.0
+    return float(numerator) / denominator_value
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--slug', required=True, help='lowercase kebab-case print slug')
@@ -47,6 +63,10 @@ def main() -> None:
     parser.add_argument('--video', type=Path, help='optional timelapse path')
     parser.add_argument('--output-dir', type=Path, default=Path('public/prints'))
     parser.add_argument('--url-prefix', default='/prints')
+    parser.add_argument(
+        '--max-duration', type=float, default=10.0,
+        help='cap the timelapse at this many seconds by speeding it up (0 disables)',
+    )
     args = parser.parse_args()
 
     if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', args.slug):
@@ -100,9 +120,18 @@ def main() -> None:
             })
 
         if args.video and video_output:
+            scale = "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2"
+            source_duration = float(probe_float(args.video, 'format=duration'))
+            speedup = 1.0
+            if args.max_duration > 0 and source_duration > args.max_duration:
+                speedup = source_duration / args.max_duration
+            filters = [scale]
+            if speedup > 1.0:
+                filters.append(f'setpts=PTS/{speedup:.6f}')
+                filters.append(f'fps={source_fps(args.video):.6f}')
             run([
                 'ffmpeg', '-y', '-i', str(args.video), '-map', '0:v:0', '-an',
-                '-vf', "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2",
+                '-vf', ','.join(filters),
                 '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-pix_fmt', 'yuv420p',
                 '-movflags', '+faststart', str(video_output),
             ])
@@ -112,6 +141,9 @@ def main() -> None:
                 'src': f"{args.url_prefix.rstrip('/')}/{video_output.name}",
                 'width': width,
                 'height': height,
+                'duration': round(float(probe_float(video_output, 'format=duration')), 2),
+                'sourceDuration': round(source_duration, 2),
+                'speedup': round(speedup, 2),
             }
     except (subprocess.CalledProcessError, ValueError) as error:
         for path in created:

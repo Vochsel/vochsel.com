@@ -37,7 +37,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-08-23',
     video: {
       src: '/prints/prototype-wall-lcd-screen.mp4',
-      label: 'Gold prototype wall LCD screen housing printing at five times speed',
+      label: 'Gold prototype wall LCD screen housing printing, timelapse',
     },
   },
   {
@@ -49,7 +49,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-08-22',
     video: {
       src: '/prints/mug-shelf.mp4',
-      label: 'White mug shelf printing at five times speed',
+      label: 'White mug shelf printing, timelapse',
     },
   },
   {
@@ -61,7 +61,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-08-21',
     video: {
       src: '/prints/cable-organiser.mp4',
-      label: 'Small dark grey cable organiser printing at five times speed',
+      label: 'Small dark grey cable organiser printing, timelapse',
     },
   },
   {
@@ -73,7 +73,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-08-19',
     video: {
       src: '/prints/battery-crates.mp4',
-      label: 'Two dark grey battery crates printing on tree supports at five times speed',
+      label: 'Two dark grey battery crates printing on tree supports, timelapse',
     },
   },
   {
@@ -85,7 +85,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-08-19',
     video: {
       src: '/prints/lattice-pen-holder.mp4',
-      label: 'Gold lattice pen holder printing at five times speed',
+      label: 'Gold lattice pen holder printing, timelapse',
     },
   },
   {
@@ -97,7 +97,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-07-27',
     video: {
       src: '/prints/hat-hanger.mp4',
-      label: 'White hat hanger printing at five times speed',
+      label: 'White hat hanger printing, timelapse',
     },
   },
   {
@@ -109,7 +109,7 @@ const prints: PrintEntry[] = [
     dateTime: '2026-07-27',
     video: {
       src: '/prints/door-clothes-hangers.mp4',
-      label: 'White door clothes hangers printing at five times speed',
+      label: 'White door clothes hangers printing, timelapse',
     },
   },
   {
@@ -123,7 +123,7 @@ const prints: PrintEntry[] = [
     href: 'https://printa.vochsel.com/editor?spec=eyJ2ZXJzaW9uIjoiMS4wIiwibmFtZSI6Ilplbml0aCB0d2lzdCB2YXNlIiwiZGVzY3JpcHRpb24iOiJBIHRhbGwgdGhyZWUtbG9iZWQgdmFzZSB3aXRoIGEgc3Ryb25nIGNvbnRpbnVvdXMgc3BpcmFsLiIsInVuaXRzIjoibW0iLCJyb290Ijp7ImtpbmQiOiJzaGFwZSIsImlkIjoiemVuaXRoIiwic291cmNlIjp7InR5cGUiOiJyZXZvbHZlIiwicHJvZmlsZSI6W1syNCwwXSxbMjcsMjBdLFsyOSw1NV0sWzI4LDEwNV0sWzI1LDE1MF0sWzI0LDE3Ml1dLCJzZWdtZW50cyI6MTgwLCJwcm9maWxlU2VnbWVudHMiOjEzMCwicmFkaXVzT2Zmc2V0IjowLCJ3YWxsIjo0LCJib3R0b21DYXAiOnRydWUsImJvdHRvbVRoaWNrbmVzcyI6My4yLCJ0b3BDYXAiOmZhbHNlLCJ0b3BUaGlja25lc3MiOjIuNCwiaW50ZXJwb2xhdGlvbiI6ImNhdG11bGwtcm9tIiwiYXhpcyI6InoifSwibW9kaWZpZXJzIjpbeyJ0eXBlIjoicmFkaWFsV2F2ZSIsImFtcGxpdHVkZSI6Ny4yLCJjb3VudCI6MywicGhhc2VEZWciOjkwLCJheGlhbFR1cm5zIjowfSx7InR5cGUiOiJ0d2lzdCIsImFuZ2xlRGVnIjoxODUsInN0YXJ0IjowLCJlbmQiOjF9LHsidHlwZSI6InRhcGVyIiwiZnJvbSI6MS4wNCwidG8iOjAuODQsImVhc2luZyI6InNtb290aHN0ZXAifV0sIm1hdGVyaWFsIjoicmVzaW4ifSwicHJpbnQiOnsiYnVpbGRWb2x1bWUiOlsyNTYsMjU2LDI1Nl0sImF1dG9DZW50ZXIiOnRydWUsInBsYWNlT25CZWQiOnRydWUsImludGVyaW9yU3RydXRzIjp7ImVuYWJsZWQiOmZhbHNlLCJwYXR0ZXJuIjoiZGlhbW9uZCIsInNwYWNpbmciOjE4LCJkaWFtZXRlciI6MS44LCJib3VuZGFyeUluc2V0IjozLCJ3YWxsT3ZlcmxhcCI6MC44LCJyYWRpYWxTZWdtZW50cyI6MTB9fSwiZGlzcGxheSI6eyJmbG9vciI6dHJ1ZSwiZ3JpZCI6dHJ1ZSwiYnVpbGRQbGF0ZSI6ZmFsc2UsImRpbWVuc2lvbnMiOnsidmlzaWJsZSI6dHJ1ZSwid2lkdGgiOnRydWUsImhlaWdodCI6dHJ1ZSwib2Zmc2V0Ijo5LCJwcmVjaXNpb24iOjF9fSwibWV0YWRhdGEiOnsiZmFtaWx5IjoidmFzZSIsImxvYmVzIjozfX0',
     video: {
       src: '/prints/zenith-twist-vase.mp4',
-      label: 'Gold Zenith twist vase printing at five times speed',
+      label: 'Gold Zenith twist vase printing, timelapse',
     },
     images: [
       {

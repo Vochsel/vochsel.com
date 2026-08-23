@@ -48,12 +48,19 @@ Omit unused flags. The script:
 
 - auto-orients images, strips private metadata, limits them to 2000 px, and writes web-ready JPEGs;
 - converts one optional video to muted H.264 MP4 with `faststart` and a maximum 1920×1080 bounding box;
+- caps that video at roughly 10 seconds, speeding it up as needed (see below);
 - refuses to overwrite existing files;
-- prints JSON containing final web paths and image dimensions.
+- prints JSON containing final web paths, image dimensions, and the video's duration and speed-up factor.
 
 It requires ImageMagick (`magick` and `identify`) for photos and FFmpeg (`ffmpeg` and `ffprobe`) for video. If a required command is unavailable, install it or perform an equivalent conversion—do not merely copy HEIC, MOV, HEVC, or oversized media into the site.
 
 For multiple photos, the script creates numbered names. Rename them to meaningful suffixes such as `-front` and `-back` when the views are obvious, and keep the entry paths in sync.
+
+### Timelapse length
+
+Every timelapse on the page should run about 10 seconds. The script enforces this by default: anything longer is sped up with `setpts` to land on 10 seconds, and anything already shorter is left at its own length rather than being stretched out. Pass `--max-duration <seconds>` to use a different target, or `--max-duration 0` to keep the source length.
+
+Because the speed-up factor varies per print, do not state a multiplier in the video `label`. Describe the subject and end with `, timelapse`—for example `Gold lattice pen holder printing, timelapse`.
 
 ## Add the entry
 
