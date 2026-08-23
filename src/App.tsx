@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import { useScrollToTop } from './hooks/useScrollToTop'
 import Landing from './pages/Landing'
 const Home = lazy(() => import('./pages/Home'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
@@ -19,6 +20,8 @@ const Admin = lazy(() => import('./pages/Admin'))
 const HomeMockups = lazy(() => import('./pages/HomeMockups'))
 
 function App() {
+  useScrollToTop()
+
   return (
     <Suspense fallback={<div className="min-h-screen bg-white dark:bg-gray-950" />}>
       <Routes>
