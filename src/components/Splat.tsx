@@ -127,10 +127,13 @@ async function mount(el: HTMLDivElement, src: string, alive: () => boolean): Pro
   el.prepend(renderer.domElement)
 
   const scene = new THREE.Scene()
-  scene.add(new SparkRenderer({ renderer }))
+  // radial sort is the most stable under rotation (Spark's default, set explicitly)
+  scene.add(new SparkRenderer({ renderer, sortRadial: true }))
   const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 100)
   const controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
+  controls.dampingFactor = 0.08
+  controls.rotateSpeed = 0.6
   controls.autoRotate = true
   controls.autoRotateSpeed = 1.5
   controls.enableZoom = false // leave the scroll wheel to the page
@@ -162,6 +165,37 @@ async function mount(el: HTMLDivElement, src: string, alive: () => boolean): Pro
   camera.position.set(0, 0.1, 4.2)
   frame(false)
 
+  // Spark sorts splats back-to-front in a worker, a few frames behind the camera. Spin faster
+  // than that and you draw with a stale order (popping, see-through patches). So cap how far
+  // the view direction can turn per second; damping carries the rest of a flick over later frames.
+  const MAX_TURN = 1.6 // rad/s, ~90°/s
+  const lastDir = new THREE.Vector3()
+  const dir = new THREE.Vector3()
+  const turn = new THREE.Quaternion()
+  const noTurn = new THREE.Quaternion()
+  const resetTurn = () => lastDir.copy(camera.position).sub(controls.target).normalize()
+  resetTurn()
+  let lastT = performance.now()
+  const limitTurn = () => {
+    const now = performance.now()
+    const dt = Math.min((now - lastT) / 1000, 0.1)
+    lastT = now
+    const offset = camera.position.clone().sub(controls.target)
+    dir.copy(offset).normalize()
+    const angle = lastDir.angleTo(dir)
+    const max = MAX_TURN * dt
+    if (angle > max) {
+      turn.setFromUnitVectors(lastDir, dir)
+      noTurn.identity().slerp(turn, max / angle)
+      dir.copy(lastDir).applyQuaternion(noTurn)
+      camera.position.copy(controls.target).addScaledVector(dir, offset.length())
+      camera.lookAt(controls.target)
+    }
+    lastDir.copy(dir)
+  }
+  const setFrame = frame
+  const frameAndReset = (face: boolean) => { setFrame(face); resetTurn() }
+
   const resize = () => {
     const { width, height } = el.getBoundingClientRect()
     renderer.setSize(width, height, false)
@@ -176,14 +210,15 @@ async function mount(el: HTMLDivElement, src: string, alive: () => boolean): Pro
   const vis = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting })
   vis.observe(el)
   renderer.setAnimationLoop(() => {
-    if (!visible || !alive()) return
+    if (!visible || !alive()) { lastT = performance.now(); return }
     controls.update()
+    limitTurn()
     renderer.render(scene, camera)
   })
 
   return {
     splats: meta.splats,
-    frame,
+    frame: frameAndReset,
     dispose() {
       renderer.setAnimationLoop(null)
       ro.disconnect()
