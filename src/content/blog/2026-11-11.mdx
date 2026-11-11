@@ -1,0 +1,101 @@
+---
+title: Splatting humans
+date: "2026-11-11"
+excerpt: I spent a few days trying to turn one AI image of a person into a 3D splat. The trick wasn't a better trainer, it was frames that agree with each other.
+visible: false
+---
+
+import { Splat, Video, Figure, Row } from '../../components/Splat'
+
+# Splatting humans
+
+{/* TODO: link the specific Voxel Kai posts. splat-human.vk.land is the demo site. */}
+Inspired by [these posts from Voxel Kai](https://splat-human.vk.land), I slopped out some Opus 5.5 and Fable 5.2 tokens to see just how one could generate realistic splats of humans.
+
+One image of a person in. A 3D Gaussian splat you can spin around out.
+
+## Results
+
+Here are the best two. Drag them around, and hit **face** to get up close.
+
+<Row>
+  <Splat src="/blog/splat-people/splats/ho-maya" label="maya" caption="HumanOrbit route. 2.6 minutes of training." />
+  <Splat src="/blog/splat-people/splats/ho-nora" label="nora" caption="HumanOrbit route. 2.6 minutes of training." />
+</Row>
+
+Each started life as a single generated photo:
+
+<Figure src="/blog/splat-people/media/subjects.jpg" alt="Three generated people: blonde, maya and nora" caption="blonde, maya and nora. All GPT Image 2.6." />
+
+## How
+
+The tldr is image → video turntable → splat.
+
+A splat wants lots of photos of the same thing from known angles. You don't have that for someone who doesn't exist, so you get a video model to make it up. The catch is the video model makes up a slightly different person every frame, and the splat can only be as sharp as those frames agree with each other.
+
+Basically everything below is me fighting that. The key unlock ended up being the [HumanOrbit](https://github.com/otiek/HumanOrbit) paper.
+
+### 1. Image to video turntable, with a prompt
+
+The obvious first go. Generate a front, ask for the back, then ask a video model to orbit the person while they stand perfectly still. VGGT guesses where the camera was for each frame, and gsplat trains on that.
+
+<Video src="/blog/splat-people/media/1-blonde-orbit.mp4" caption="Half an orbit from an image-to-video model. Totally fine as a video." />
+
+<Splat src="/blog/splat-people/splats/blonde" label="blonde · v1" aspect="16 / 10" caption="Less fine as a splat. She drifts and morphs through the orbit, and the cameras are guesses." />
+
+### 2. Image to 3D to rendered turntable, recast with H3
+
+If the cameras are guesses, why not render them myself?
+
+So GPT Image makes a front and back, Rodin turns those into a rough 3D proxy, and Blender renders an exact orbit around it. Every camera is known. Then MiniMax's H3 Recast restyles the grey proxy video into a photoreal one, and the Blender cameras go straight into training. No guessing.
+
+<Video src="/blog/splat-people/media/2-maya-proxy-recast.mp4" caption="Left: the Rodin proxy in Blender (head orbit, dolly out, body orbit, all one 14 second shot). Right: after H3 Recast." />
+
+I went pretty deep on variations of this. A separate orbit just for the head. Painting eyes onto the proxy first, because otherwise Recast invented new ones every frame (and they followed the camera, which is unsettling). Squashing head and body into one 14 second shot so there's only one identity and one lighting. Starting the orbit at the back of the head so the loop seam lands on hair instead of a face.
+
+<Row>
+  <Splat src="/blog/splat-people/splats/blonde-g" label="blonde · painted head" caption="Painted proxy face, separate head and body passes." />
+  <Splat src="/blog/splat-people/splats/maya-v2" label="maya · recast" caption="One combined shot, better trainer. The best this route got." />
+</Row>
+
+It works on a neutral A-pose. Then I tried a pose.
+
+<Video src="/blog/splat-people/media/2-nora-proxy-recast.mp4" caption="nora. The hand on the hip and the hair don't stay where the proxy puts them." />
+
+<Splat src="/blog/splat-people/splats/nora" label="nora · recast" caption="Ghost arm, ghost leg." />
+
+I threw a lot at the trainer after this. Longer training, more splats, optical flow to line the frames back up, an upscaler pass. Most of it made things worse. Longer training just overfit, and the frames were only sliding about a pixel against the splat anyway.
+
+The thing that eventually clicked: sharpness stalled at about a third of the source frames no matter what I did. The frames don't disagree on *where* things are, they disagree on *what* things are. Detail and shading change from frame to frame. The trainer was never the problem.
+
+### 3. HumanOrbit (this was the key)
+
+[HumanOrbit](https://github.com/otiek/HumanOrbit) is a Wan 2.1 LoRA trained to do exactly one thing: a full 360 orbit around a person who doesn't move. No proxy, no Blender, no recast. One image in, 81 frames out.
+
+<Video src="/blog/splat-people/media/3-humanorbit.mp4" caption="HumanOrbit for maya and nora, straight from the front image." />
+
+The frames are tiny (544×736) and a bit soft. But they agree with each other, which turns out to matter way more.
+
+<Row>
+  <Figure src="/blog/splat-people/media/3-ho-maya-eval.jpg" alt="maya splat render next to a held-out HumanOrbit frame" caption="maya. Splat render on the left, a frame it never trained on on the right." />
+  <Figure src="/blog/splat-people/media/3-ho-nora-eval.jpg" alt="nora splat render next to a held-out HumanOrbit frame" caption="nora, same deal." />
+</Row>
+
+| | route | PSNR ↑ | LPIPS ↓ | train |
+|---|---|---|---|---|
+| nora | recast | 19.9 | 0.283 | 5.5 min |
+| maya | recast | 23.4 | 0.218 | 5.8 min |
+| nora | HumanOrbit | **26.0** | **0.071** | 2.6 min |
+| maya | HumanOrbit | **26.5** | **0.076** | 2.6 min |
+
+(Scored against held-out frames. The HumanOrbit frames are lower res than the recast ones so it's not perfectly apples to apples, but nora going from ghost limbs to an actual person is hard to argue with.)
+
+Funnily enough, upscaling the orbit 2× before training scored *worse*. The upscaler invents fresh detail per frame, which is the exact problem again.
+
+{/* Worth saying publicly? HumanOrbit has no licence file and uses the non-commercial VGGT-1B weights, so this is research only for now. */}
+
+## Next
+
+A few things I want to try. HumanOrbit plus the original front image as an anchor, so the face keeps its detail. A HumanOrbit head close-up stitched into the body. And an upscaler that keeps frames consistent with each other, rather than sharpening each one on its own.
+
+\- Ben
