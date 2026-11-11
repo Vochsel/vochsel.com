@@ -37,9 +37,13 @@ Basically everything below is me fighting that. The key unlock ended up being th
 
 ### 1. Image to video turntable, with a prompt
 
-The obvious first go. Generate a front, ask for the back, then ask a video model to orbit the person while they stand perfectly still. VGGT guesses where the camera was for each frame, and gsplat trains on that.
+The obvious first go. Generate a front with [GPT Image 2.6](https://fal.ai/models/openai/gpt-image-2.6/flare/text-to-image), [edit](https://fal.ai/models/openai/gpt-image-2.6/flare/edit) it into a back view, then ask [Kling O3](https://fal.ai/models/fal-ai/kling-video/o3/standard/image-to-video) to orbit the camera around the person while they stand perfectly still. [VGGT](https://github.com/facebookresearch/vggt) guesses where the camera was for each frame, and [gsplat](https://github.com/nerfstudio-project/gsplat) trains on that.
 
-<Video src="/blog/splat-people/media/1-blonde-orbit.mp4" caption="Half an orbit from an image-to-video model. Totally fine as a video." />
+The "stand perfectly still" bit is where it falls over. It was really hard to keep the person from moving. Ask for an orbit and half the time the camera stays put and the person turns on the spot instead, like they're on a lazy susan. When the camera does move, they shift their weight, sway their arms, or turn their head to follow you around. Video models really want people to *do* something.
+
+That's fine for a video. It's fatal for a splat, which assumes the world holds still and only the camera moves. Every bit of fidgeting turns into blur.
+
+<Video src="/blog/splat-people/media/1-blonde-orbit.mp4" caption="Half an orbit from Kling O3. One of the better ones, and totally fine as a video." />
 
 <Splat src="/blog/splat-people/splats/blonde" label="blonde · v1" aspect="16 / 10" caption="Less fine as a splat. She drifts and morphs through the orbit, and the cameras are guesses." />
 
@@ -47,7 +51,7 @@ The obvious first go. Generate a front, ask for the back, then ask a video model
 
 If the cameras are guesses, why not render them myself?
 
-So GPT Image makes a front and back, Rodin turns those into a rough 3D proxy, and Blender renders an exact orbit around it. Every camera is known. Then MiniMax's H3 Recast restyles the grey proxy video into a photoreal one, and the Blender cameras go straight into training. No guessing.
+So GPT Image makes a front and back, [Rodin](https://fal.ai/models/fal-ai/hyper3d/rodin) turns those into a rough 3D proxy, and [Blender](https://www.blender.org) renders an exact orbit around it. Every camera is known, and the proxy can't fidget. Then MiniMax's [H3 Recast](https://fal.ai/models/minimax/h3-max/recast) restyles the grey proxy video into a photoreal one, and the Blender cameras go straight into training. No guessing.
 
 <Video src="/blog/splat-people/media/2-maya-proxy-recast.mp4" caption="Left: the Rodin proxy in Blender (head orbit, dolly out, body orbit, all one 14 second shot). Right: after H3 Recast." />
 
@@ -64,13 +68,13 @@ It works on a neutral A-pose. Then I tried a pose.
 
 <Splat src="/blog/splat-people/splats/nora" label="nora · recast" caption="Ghost arm, ghost leg." />
 
-I threw a lot at the trainer after this. Longer training, more splats, optical flow to line the frames back up, an upscaler pass. Most of it made things worse. Longer training just overfit, and the frames were only sliding about a pixel against the splat anyway.
+I threw a lot at the trainer after this. Longer training, more splats, optical flow to line the frames back up, a [SeedVR2](https://fal.ai/models/fal-ai/seedvr/upscale/video) upscaler pass. Most of it made things worse. Longer training just overfit, and the frames were only sliding about a pixel against the splat anyway.
 
 The thing that eventually clicked: sharpness stalled at about a third of the source frames no matter what I did. The frames don't disagree on *where* things are, they disagree on *what* things are. Detail and shading change from frame to frame. The trainer was never the problem.
 
 ### 3. HumanOrbit (this was the key)
 
-[HumanOrbit](https://github.com/otiek/HumanOrbit) is a Wan 2.1 LoRA trained to do exactly one thing: a full 360 orbit around a person who doesn't move. No proxy, no Blender, no recast. One image in, 81 frames out.
+[HumanOrbit](https://github.com/otiek/HumanOrbit) is a [Wan 2.1](https://huggingface.co/Wan-AI/Wan2.1-I2V-14B-480P) LoRA trained to do exactly one thing: a full 360 orbit around a person who doesn't move. Which is precisely the thing I couldn't prompt my way into in step 1. No proxy, no Blender, no recast. One image in, 81 frames out.
 
 <Video src="/blog/splat-people/media/3-humanorbit.mp4" caption="HumanOrbit for maya and nora, straight from the front image." />
 
@@ -90,11 +94,13 @@ The frames are tiny (544×736) and a bit soft. But they agree with each other, w
 
 (Scored against held-out frames. The HumanOrbit frames are lower res than the recast ones so it's not perfectly apples to apples, but nora going from ghost limbs to an actual person is hard to argue with.)
 
-Funnily enough, upscaling the orbit 2× before training scored *worse*. The upscaler invents fresh detail per frame, which is the exact problem again.
+Funnily enough, upscaling the orbit 2× with [SeedVR2](https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler) before training scored *worse*. The upscaler invents fresh detail per frame, which is the exact problem again.
 
 {/* Worth saying publicly? HumanOrbit has no licence file and uses the non-commercial VGGT-1B weights, so this is research only for now. */}
 
 ## Next
+
+(The splats on this page are rendered with [Spark](https://sparkjs.dev), if you're curious.)
 
 A few things I want to try. HumanOrbit plus the original front image as an anchor, so the face keeps its detail. A HumanOrbit head close-up stitched into the body. And an upscaler that keeps frames consistent with each other, rather than sharpening each one on its own.
 
