@@ -20,7 +20,7 @@ Here are the best two. Drag them around, and hit **face** to get up close.
 
 <Row>
   <Splat src="/blog/splat-people/splats/ho-maya" label="maya" caption="HumanOrbit route. 2.6 minutes of training." />
-  <Splat src="/blog/splat-people/splats/ho-nora" label="nora" caption="HumanOrbit route. 2.6 minutes of training." />
+  <Splat src="/blog/splat-people/splats/ho2-nora-hi-a" label="nora" caption="HumanOrbit at 720p, plus a face anchor (more on that below)." />
 </Row>
 
 Each started life as a single generated photo:
@@ -96,12 +96,41 @@ The frames are tiny (544×736) and a bit soft. But they agree with each other, w
 
 Funnily enough, upscaling the orbit 2× with [SeedVR2](https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler) before training scored *worse*. The upscaler invents fresh detail per frame, which is the exact problem again.
 
+### 4. Anchoring the face
+
+HumanOrbit's weak spot is resolution. The original image is 1088×1920 and the face is lovely. By the time it's been through a 480p orbit it's... fine. Soft.
+
+(Also, a funny one. HumanOrbit saves its frames as quality 75 JPEGs. I patched it to write PNGs and that alone bumped the scores. Free win.)
+
+So - why not train on the original image too? It's basically frame 0 of the orbit, so I know exactly where its camera is. After the normal training, a second pass mixes in the full res front image.
+
+The first attempt went weird. With only one view to match, the trainer happily cheats and pushes splats forwards and backwards however it likes. Eyes sank into the head, and the embroidery floated off the dress. The fix was locking depth to what the orbit had already learnt, and keeping splats thin along the view ray. The front image can repaint the surface, but it can't reshape it.
+
+<Figure src="/blog/splat-people/media/4-anchor-front.jpg" alt="Four splat renders of nora's face from the front, getting sharper left to right" caption="Straight on. Left to right: 480p, 480p + anchor, 720p, 720p + anchor." />
+
+Straight on, it's a big jump. Eyes, lashes, skin and earrings all come back.
+
+The catch is turning away. The anchor only knows what the face looks like from the front, so at 480p it paints a sharp face over a soft head, and 40° off axis they stop lining up. Double eyes. Slightly horror movie.
+
+<Figure src="/blog/splat-people/media/4-anchor-40.jpg" alt="The same four renders from 40 degrees to the side; the 480p anchored one has doubled eyes" caption="Same four, 40° off axis. The 480p anchor smears. At 720p it holds." />
+
+Bumping the orbit itself to 720p fixed that. It was weirdly the biggest single quality jump of the whole project, and it still only takes about 2.5 minutes to generate. With a better head underneath, the anchor has something to agree with.
+
+<Row>
+  <Splat src="/blog/splat-people/splats/ho2-nora-hi" label="nora · 720p" caption="720p orbit, no anchor." />
+  <Splat src="/blog/splat-people/splats/ho2-nora-hi-a" label="nora · 720p + anchor" caption="Plus the front image. Hit face." />
+</Row>
+
+The numbers are a bit funny here. Held-out PSNR barely moves (24.0 → 24.1), which makes sense - it's being scored against soft orbit frames, not the sharp original. Sharpness goes from 0.40 to 0.54 though, and you can see it.
+
+It's not free. The anchored one is 1.35M splats against 640k, so it's twice the download and takes a little longer to load.
+
 {/* Worth saying publicly? HumanOrbit has no licence file and uses the non-commercial VGGT-1B weights, so this is research only for now. */}
 
 ## Next
 
 (The splats on this page are rendered with [Spark](https://sparkjs.dev), if you're curious.)
 
-A few things I want to try. HumanOrbit plus the original front image as an anchor, so the face keeps its detail. A HumanOrbit head close-up stitched into the body. And an upscaler that keeps frames consistent with each other, rather than sharpening each one on its own.
+A few things I want to try. HumanOrbit cuts the person out with a hard edge, which leaves a rim of grey backdrop in the hair, so I want to generate the front on a flat colour instead (I'd have done it already, but I ran out of fal credits). A HumanOrbit head close-up stitched into the body. And pushing the orbit past 720p, since that's been the cheapest win so far.
 
 \- Ben
